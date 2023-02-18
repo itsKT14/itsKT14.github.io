@@ -1,0 +1,41 @@
+<%- include('./partials/head.ejs') %>
+<div style="height: 100px;" class="pt-1">
+<%if(message) {%>
+    <div class="alert alert-primary alert-dismissible fade show mb-0 mx-2" role="alert">
+        <%= message%>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<%}%>
+</div>
+<div class="container-fluid d-flex align-items-center justify-content-center">
+    <div class="bg-dark rounded rounded-4 mb-5 d-flex justify-content-center flex-column px-4 text-light" style="height: 500px; width: 500px;">
+        <h1 class="align-self-center mb-3">Register</h1>
+        <form action="/user/register" method="POST">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" name="name" id="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" name="email" id="email" required>
+            </div>
+            <div class="mb-2">
+                <label for="password" class="form-label">Password</label>
+                <input id="showPass" type="password" class="form-control" name="password" id="password" required>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="showPassword()">
+                <label class="form-check-label" for="exampleCheck1">Show Password</label>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label" for="exampleCheck1">Already have an account? <a href="/user/login">Sign In</a></label>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary rounded-pill" style="width: 150px;">Register</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="/js/script.js"></script>
+<%- include('./partials/foot.ejs') %>

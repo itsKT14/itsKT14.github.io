@@ -1,0 +1,71 @@
+div#banner {
+    background-image: url("/img/hero-banner.jpg");
+    min-height: 480px;
+    font-family: "Garamond";
+}
+    div#banner a {
+        width: 150px;
+    }
+
+.category-card {
+    width: 251px;
+    height: 251px;
+}
+
+.hero-title {
+    font-size: 50px;
+    backdrop-filter: blur(10px);
+}
+
+.hero-slogan {
+    font-size: 40px;
+    backdrop-filter: blur(10px);
+}
+
+@font-face {font-family: "Acropolis"; 
+    src: url("//db.onlinewebfonts.com/t/384df45698f8cbb862dc440ae4d27d26.eot"); 
+    src: url("//db.onlinewebfonts.com/t/384df45698f8cbb862dc440ae4d27d26.eot?#iefix") format("embedded-opentype"), 
+    url("//db.onlinewebfonts.com/t/384df45698f8cbb862dc440ae4d27d26.woff2") format("woff2"),
+    url("//db.onlinewebfonts.com/t/384df45698f8cbb862dc440ae4d27d26.woff") format("woff"), 
+    url("//db.onlinewebfonts.com/t/384df45698f8cbb862dc440ae4d27d26.ttf") format("truetype"), 
+    url("//db.onlinewebfonts.com/t/384df45698f8cbb862dc440ae4d27d26.svg#Acropolis") format("svg"); }
+
+.brand-logo {
+    font-family: "Acropolis";
+}
+
+.nav-menu {
+    color: black;
+}
+
+.nav-menu:hover {
+    color: white;
+    /* background: radial-gradient(circle at 24.1% 68.8%, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 99.4%); */
+    background: linear-gradient(to top, rgb(9, 32, 63) 0%, rgb(83, 120, 149) 100%);
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding-left: 9px;
+    padding-top: 9px;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+.category-menu:hover {
+    background-color: #f0f1f1;
+}
+
+.cat-btn:focus:not(:focus-visible) {
+    outline: 0;
+    box-shadow: none;
+}
