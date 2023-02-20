@@ -15,18 +15,19 @@ userRoutes.get('/logout', (req, res)=>{
     res.redirect('login');
 });
 
-// userRoutes.get('/profile', verify, (req, res)=>{
-//     const user = req.getUser.name || "";
-//     res.render('register',{title:"Register", userName:user});
-// });
-userRoutes.get('/profile', verify, userController.user_profile);
+//profile view
+userRoutes.get('/profile', verify.otherPageAuth, userController.user_profile);
+
+//sell view
+userRoutes.get('/sell', verify.otherPageAuth, userController.user_sell_view);
+
+//user sell upload
+userRoutes.get('/upload', userController.user_sell_upload);
 
 //add user
 userRoutes.post('/register', userController.user_add);
 
 //login user
 userRoutes.post('/login', userController.user_login);
-
-
 
 module.exports = userRoutes;

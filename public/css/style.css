@@ -45,7 +45,7 @@ div#banner {
 }
 
 .has-search .form-control {
-    padding-left: 2.375rem;
+    padding-left: 2.8rem;
 }
 
 .has-search .form-control-feedback {
@@ -54,7 +54,7 @@ div#banner {
     display: block;
     width: 20px;
     height: 20px;
-    padding-left: 9px;
+    padding-left: 16px;
     padding-top: 9px;
     text-align: center;
     pointer-events: none;
@@ -68,4 +68,22 @@ div#banner {
 .cat-btn:focus:not(:focus-visible) {
     outline: 0;
     box-shadow: none;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 300px;
+    overflow-x: hidden;
+}
+
+.zindex {
+    z-index: 100;
+}
+
+.notzindex {
+    z-index: 1;
+}
+
+.btn-align {
+    padding-right: 490px;
 }

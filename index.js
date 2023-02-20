@@ -10,9 +10,14 @@ const userRoutes = require('./routes/userRoutes');
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
+//static file
+app.use(express.static('public'));
+app.use('/css', express.static(__dirname+'public/css'));
+app.use('/js', express.static(__dirname+'public/js'));
+app.use('/img', express.static(__dirname+'public/img'));
+
 // middleware
 app.use(express.json());
-app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(cors());

@@ -3,7 +3,7 @@ const defaultRoutes = require('express').Router();
 const verify = require('../utils/auth');
 
 //home page
-defaultRoutes.get('/home', verify, (req, res)=>{
+defaultRoutes.get('/home', verify.homePageAuth, (req, res)=>{
     const user = req.getUser.name || "";
     // let message = false;
     // if(req.cookies.msg) {

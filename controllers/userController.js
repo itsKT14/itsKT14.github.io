@@ -3,6 +3,9 @@ const validation = require('../utils/validation');
 const bcrypt = require('../utils/bcrypt');
 const jwt = require('jsonwebtoken');
 
+const fs = require('fs')
+const { google } = require('googleapis');
+
 const user_add = async (req, res) => {
 	try {
         const { error } =  validation.userValidation.validate(req.body);
@@ -45,12 +48,11 @@ const user_login = async (req, res) => {
         if(!isValid) return res.render('login', {message: "The password you've entered is incorrect.", title: "Login"});
 
         const token = jwt.sign({
-            id: logUser._id,
+            email: logUser.email,
             name: logUser.name
-            }, process.env.TOKEN_SECRET, {expiresIn: "1h"});
+            }, process.env.TOKEN_SECRET, {expiresIn: "2h"});
 
         res.cookie('token', token, { maxAge: 900000, httpOnly: true });
-        res.cookie('page',"home", {httpOnly: true});
 
         res.redirect('/home');
 	} catch (error) {
@@ -60,17 +62,65 @@ const user_login = async (req, res) => {
 }
 
 const user_profile = async (req, res) => {
-    const logId = req.getUser.id;
-    const logUser = await User.findOne({id: logId});
-    console.log(logUser);
+    const logEmail = req.getUser.email;
+    const logUser = await User.findOne({email: logEmail});
+    info = {
+        email: logUser.email,
+        pic: logUser.pic || "/img/user-icon.png",
+        address: logUser.address || "Unknown"
+    }
     res.render('profile',{
-        title:"Profile",
-        userName:logUser.name
+        title: "Profile",
+        userName: logUser.name,
+        info
     });
+}
+
+const user_sell_view = async (req, res) => {
+    const logName = req.getUser.name;
+    res.render('sell',{title: "Sell", userName: logName});
+}
+
+const user_sell_upload = async (req, res) => {
+    const GOOGLE_API_FOLDER_ID = '1-piOPBbYYcSGwEgBRNl1PJbtmCkMkoeK';
+    try {
+        const auth = new google.auth.GoogleAuth({
+            keyFile: './googlekey.json',
+            scopes: ['https://www.googleapis.com/auth/drive']
+        })
+    
+        const driveService = google.drive({
+            version: 'v3',
+            auth
+        })
+    
+        const fileMetaData = {
+            'name': 'snowplace.jpg',
+            'parents': [GOOGLE_API_FOLDER_ID]
+        }
+    
+        const media = {
+            mimeType: 'image/jpg',
+            body: fs.createReadStream('./chellocat.jpg')
+        }
+        
+        const response = await driveService.files.create({
+            resource: fileMetaData,
+            media: media,
+            field: 'id'
+        })
+        console.log(response.data.id);
+    } catch (error) {
+        console.log('Upload file error', error)
+    }
+    res.redirect('/user/sell');
+    //https://drive.google.com/uc?export=view&id=
 }
 
 module.exports = {
     user_add,
     user_login,
-    user_profile
+    user_profile,
+    user_sell_view,
+    user_sell_upload
 }
