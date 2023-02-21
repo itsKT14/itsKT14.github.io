@@ -16,12 +16,15 @@ userRoutes.get('/logout', (req, res)=>{
 });
 
 //profile view
-userRoutes.get('/profile', verify.otherPageAuth, userController.user_profile);
+userRoutes.get('/profile/:id', verify.otherPageAuth, userController.user_profile);
 
 //sell view
 userRoutes.get('/sell', verify.otherPageAuth, userController.user_sell_view);
 
-//user sell upload
+//sell
+userRoutes.post('/sell', verify.otherPageAuth, userController.user_sell);
+
+//user image upload
 userRoutes.get('/upload', userController.user_sell_upload);
 
 //add user

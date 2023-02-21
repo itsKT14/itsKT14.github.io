@@ -47,9 +47,13 @@ const user_login = async (req, res) => {
 
         if(!isValid) return res.render('login', {message: "The password you've entered is incorrect.", title: "Login"});
 
+        const defaultPic = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png";
+        const getPic = logUser.pic || defaultPic;
         const token = jwt.sign({
+            id: logUser.id,
             email: logUser.email,
-            name: logUser.name
+            name: logUser.name,
+            pic: getPic
             }, process.env.TOKEN_SECRET, {expiresIn: "2h"});
 
         res.cookie('token', token, { maxAge: 900000, httpOnly: true });
@@ -62,23 +66,40 @@ const user_login = async (req, res) => {
 }
 
 const user_profile = async (req, res) => {
+    const logId = req.getUser.id;
     const logEmail = req.getUser.email;
-    const logUser = await User.findOne({email: logEmail});
+    const logPic = req.getUser.pic;
+    const logUser = await User.findOne({_id: logId});
     info = {
+        name: logUser.name,
         email: logUser.email,
         pic: logUser.pic || "/img/user-icon.png",
         address: logUser.address || "Unknown"
     }
     res.render('profile',{
         title: "Profile",
+        id: logUser.id,
         userName: logUser.name,
+        pic: logPic,
         info
     });
 }
 
+const user_sell = async (req, res) => {
+    console.log(req.body);
+    res.redirect('sell');
+}
+
 const user_sell_view = async (req, res) => {
+    const logId = req.getUser.id;
     const logName = req.getUser.name;
-    res.render('sell',{title: "Sell", userName: logName});
+    const logPic = req.getUser.pic;
+    res.render('sell',{
+        title: "Sell",
+        id: logId,
+        userName: logName,
+        pic: logPic
+    });
 }
 
 const user_sell_upload = async (req, res) => {
@@ -121,6 +142,7 @@ module.exports = {
     user_add,
     user_login,
     user_profile,
+    user_sell,
     user_sell_view,
     user_sell_upload
 }

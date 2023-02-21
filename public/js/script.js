@@ -43,7 +43,7 @@ function loadImg(link) {
 
 function isLoading() {
 	if ( document.getElementById("spinner").classList.contains('d-none') ) {
-		alert('Error in class, d-none is existing');
+		console.log('Error in class, d-none is existing, cause of reloading the page');
 	} else {
 		document.getElementById("spinner").classList.add('d-none');
 	}
@@ -59,4 +59,16 @@ function uploadOption(option) {
 		document.getElementById("formText").disabled = true;
 		document.getElementById("formFile").disabled = false;
 	}
+}
+
+function pickCategory(category, tag, accordionNumber) {
+	document.getElementById('chosenCategory').innerText = category+" > "+tag;
+
+	const categoryBtn = new bootstrap.Dropdown("#category-dropdown");
+	const accordionHeader = "btn-flush-collapse"+accordionNumber;
+	const accordionBody = "flush-collapse"+accordionNumber;
+
+	document.getElementById(accordionHeader).classList.add('collapsed');
+	document.getElementById(accordionBody).classList.remove('show');
+	categoryBtn.hide();
 }

@@ -1,0 +1,78 @@
+<%- include('./partials/head.ejs') %>
+<%- include('./partials/nav.ejs') %>
+<div class="container-lg mt-5 d-flex gap-3 mb-5">
+    <div class="col-3">
+        <div class="nav flex-column nav-pills me-3 gap-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Edit profile</button>
+            <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Change password</button>
+            <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Notifications</button>
+    <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Data and privacy</button>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
+                <div class="shadow rounded rounded-3 p-4">
+                    <h1 class="pb-3">Edit Profile</h1>
+                    <h4>Profile Photo</h4>
+                    <div class="d-flex gap-4">
+                        <div class="col-auto">
+                            <label for="preview" class="form-label">Image Preview:</label>
+                            <div class="col border" style="height: 225px; width: 225px;">
+                                <img id="preview" src="<%=info.pic%>" alt="" class="w-100 h-100 d-none" onload="isLoading()">
+                                <div class="d-flex h-100 justify-content-center align-items-center d-none" id="spinner">
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label for="imglink" class="form-label">Image link:</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-text" id="imglink">
+                                    <input class="form-check-input mt-0" type="radio" value="opt1" name="upload" onclick="uploadOption(this.value)" checked>
+                                </div>
+                                <span class="input-group-text" id="inputGroup-sizing-default">URL:</span>
+                                <input type="text" class="form-control" id="formText" aria-describedby="inputGroup-sizing-default" oninput="loadImg(this.value)" value="<%=info.pic%>">
+                            </div>
+                            <label for="imgupload" class="form-label">or Image upload:</label>
+                            <div class="input-group mb-4">
+                                <div class="input-group-text" id="imgupload">
+                                    <input class="form-check-input mt-0" type="radio" value="opt2" name="upload" onclick="uploadOption(this.value)">
+                                </div>
+                                <input class="form-control" type="file" id="formFile" accept="image/jpeg, image/png, image/jpg" onchange="testFunc(this.files)" disabled>
+                            </div>
+                            <p class="fw-light"><i class="bi bi-info-circle me-2"></i>Clear frontal face photos are an important way for buyers and sellers to learn about each other and to avoid scammers.</p>
+                        </div>
+                    </div>
+                    <h4 class="mt-4 mb-3">Public Profile</h4>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name" value="<%=info.name%>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" value="<%=info.email%>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address (City)</label>
+                        <input type="text" class="form-control" name="address" id="address" placeholder="Enter your address (city)" value="<%=info.address%>">
+                    </div>
+                    <hr class="my-4">
+                    <div class="d-flex flex-row-reverse">
+                        <button class="btn btn-info">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
+                <div class="shadow rounded rounded-3 p-4">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/script.js"></script>
+<%- include('./partials/categories.ejs') %>
+<%- include('./partials/foot.ejs') %>
