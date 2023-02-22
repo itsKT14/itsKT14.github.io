@@ -34,6 +34,7 @@ const home_page = async (req, res) => {
     const endOfPage = (page+1) * limit <= total ? (page+1) * limit : total;
     
     const newListings = await listing.find({title: {$regex: search, $options: 'i'}} && {sold: false})
+    .sort({createdAt: -1})
     .limit(limit)
     .skip(page*limit);
     const items = [];

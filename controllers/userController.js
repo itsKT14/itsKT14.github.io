@@ -78,7 +78,7 @@ const user_profile = async (req, res) => {
             pic: logUser.pic || "/img/user-icon.png",
             address: logUser.address || "N/A Address"
         }
-        const newListings = await listing.find({sellerId: tokenId});
+        const newListings = await listing.find({sellerId: tokenId}).sort({sold: false});
         res.render('profile', {title: "Profile", id: tokenId, info, newListings});
     } else {
         res.render('badpage',{title: "Error 404"});
