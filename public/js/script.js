@@ -12,6 +12,7 @@ function isMeetup() {
 		document.getElementById("meetupInfo").classList.remove('d-none');
 	} else {
 		document.getElementById("meetupInfo").classList.add('d-none');
+		document.getElementById("meetupInfo").value="";
 	}
 }
 
@@ -20,6 +21,7 @@ function isDeliver() {
 		document.getElementById("deliverInfo").classList.remove('d-none');
 	} else {
 		document.getElementById("deliverInfo").classList.add('d-none');
+		document.getElementById("deliverInfo").value="";
 	}
 }
 

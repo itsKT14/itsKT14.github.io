@@ -1,5 +1,80 @@
 <%- include('./partials/head.ejs') %>
 <%- include('./partials/nav.ejs') %>
+<div class="container-lg mt-5 mb-5">
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><%=item.category%></a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#"><%=item.tag%></a></li>
+        </ol>
+    </nav>
+    <div class="d-flex gap-4 mb-4">
+        <div class="col-4">
+            <img src="<%=item.pic%>" alt="" class="w-100 h-100 rounded rounded-3 border shadow p-3">
+        </div>
+        <div class="col shadow rounded rounded-3 p-4">
+            <h2 class="pb-3" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%=item.title%></h2>
+            <p class="fs-3"><i class="bi bi-cash-coin pe-2"></i> PHP <%=item.price%></p>
+            <p class="fs-5"><i class="bi bi-bookmark pe-2"></i>Category: <%=item.category%></p>
+            <p class="fs-5"><i class="bi bi-tag pe-2"></i>Tag: <%=item.tag%></p>
+            <p class="fs-5"><i class="bi bi-bag pe-2"></i>Brand: <%=item.brand%></p>
+            <p class="fs-5"><i class="bi bi-geo-alt pe-2"></i>Location: <%=seller.address%></p>
+            <p class="fs-5"><i class="bi bi-check2-circle pe-2"></i>Status: <%=item.sold==true?"Sold":"Available"%></p>
+        </div>
+    </div>
 
+    <div class="d-flex gap-4">
+        <div class="col-6 shadow rounded rounded-3 p-4">
+            <h3 class="">Description</h3>
+            <p class="pe-4"><i class="bi bi-info-circle pe-2"></i><%=item.description%></p>
+            <%if(item.morethanOne){%>
+                <p><i class="bi bi-info-circle pe-2"></i>Seller have more than one of the same item</p>
+            <%}%>
+            <%if(item.allowSms==true && seller.phone>0){%>
+                <p><i class="bi bi-telephone pe-2"></i><%=seller.phone%></p>
+            <%}%>
+            <%if(item.meetup || item.deliver){%>
+                <h3 class="mt-4 pb-2">Deal Method</h3>
+                <%if(item.meetup){%>
+                    <p><i class="bi bi-info-circle pe-2"></i>Meet-up: <%=item.meetup%></p>
+                <%}%>
+                <%if(item.deliver){%>
+                    <p><i class="bi bi-info-circle pe-2"></i>Mailing & Delivery: <%=item.deliver%></p>
+                <%}%>
+            <%}%>
+        </div>
+        <div class="col d-flex shadow rounded rounded-3 p-4 flex-column">
+            <h3>Seller</h3>
+            <div class="input-group mb-1">
+                <span class="input-group-text bg-white border-0 ps-0 pe-3" id="search">
+                    <img class="rounded-circle border border-dark" src="<%=seller.pic%>" alt="" style="width: 40px; height: 40px;">
+                </span>
+                <span class="input-group-text bg-white border-0 ps-0 fs-5" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%=seller.name%></span>
+            </div>
+            <div class="d-flex">
+                <div class="col-6">
+                    <p><%=seller.email%></p>
+                    <p>5.0 ⭐⭐⭐⭐⭐ (3)</p>
+                    <p><%=seller.address%> • Joined 3y 2m</p>
+                    <p>Verified 😉 😊 😁</p>
+                    <p>7 Followers • 1 Following</p>
+                </div>
+                <%if(id==item.sellerId){%>
+                <div class="col-6 d-flex flex-column px-4 gap-3">
+                    <a class="btn btn-primary rounded-pill <%=item.sold===true?'disabled':''%>" href="/item/edit/<%=item._id%>">Edit Listing</a>
+                    <%if(item.sold!==true){%>
+                    <a class="btn btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal2">Mark as Sold</a>
+                    <%} else {%>
+                        <a class="btn btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal1">Resell Listing</a>
+                    <%}%>
+                    <a class="btn btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal3">Delete Listing</a>
+                </div>
+                <%}%>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('./partials/modal_delete.ejs') %>
+<%- include('./partials/modal_resell.ejs') %>
+<%- include('./partials/modal_sold.ejs') %>
 <%- include('./partials/categories.ejs') %>
 <%- include('./partials/foot.ejs') %>

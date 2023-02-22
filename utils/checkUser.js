@@ -15,7 +15,16 @@ const getPic = async (id) => {
     }
 }
 
+const getAddress = async (id) => {
+    if(id) {
+        const logUser = await User.findOne({_id: id});
+        const address = logUser.address || "N/A Address";
+        return address;
+    }
+}
+
 module.exports = {
     getName,
-    getPic
+    getPic,
+    getAddress
 };

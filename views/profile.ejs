@@ -38,8 +38,11 @@
                         <%for(let product of newListings){%>
                         <div class="card mb-2" style="width: 11rem;">
                             <img src="<%=product.pic%>" class="card-img-top" alt="pic" style="width: 174px; height: 174px;">
+                            <%if(product.sold==true){%>
+                            <p class="bg-primary text-white mb-0 px-1" style="position: absolute; top: 24px; z-index: 1;">Sold</p>
+                            <%}%>
                             <div class="card-body">
-                                <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%=product.title%></h5>
+                                <h5 class="card-title pb-1" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%=product.title%></h5>
                                 <p class="card-text mb-0">PHP <%=product.price%></p>
                                 <p class="card-text" style="text-overflow: ellipsis;"><%=product.condition%></p>
                                 <a href="/item/<%=product._id%>" class="btn btn-primary w-100">View</a>
