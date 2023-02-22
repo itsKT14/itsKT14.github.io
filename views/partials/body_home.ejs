@@ -34,13 +34,32 @@
         <div class="category-card rounded rounded-4 bg-dark"></div>
     </div>
 </div>
-<div id="featured-categories" class="container-lg p-0 mt-5">
-    <h2 class="mb-3">Featured Categories</h2>
+<div id="featured-categories" class="container-lg p-0 my-5">
+    <h2 class="mb-3">New Listings</h2>
     <div class="container-fluid d-flex flex-wrap p-0 gap-3">
-        <div class="category-card rounded rounded-4 bg-dark"></div>
-        <div class="category-card rounded rounded-4 bg-dark"></div>
-        <div class="category-card rounded rounded-4 bg-dark"></div>
-        <div class="category-card rounded rounded-4 bg-dark"></div>
-        <div class="category-card rounded rounded-4 bg-dark"></div>
+        <% if (newListings.length > 0){ %>
+            <%for(let product of newListings){%>
+            <div class="card mb-2" style="width: 238px;">
+                <img src="<%=product.pic%>" class="card-img-top" alt="pic" style="width: 236px; height: 236px;">
+                <div class="card-body">
+                    <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%=product.title%></h5>
+                    <p class="card-text mb-0">PHP <%=product.price%></p>
+                    <p class="card-text mb-1"><%=product.condition%></p>
+                    <div class="input-group mb-1">
+                        <span class="input-group-text bg-white border-0 ps-0 pe-1" id="search">
+                            <img class="rounded-circle border border-dark mx-1" src="<%=product.sellerPic%>" alt="" style="width: 25px; height: 25px;">
+                        </span>
+                        <span class="input-group-text bg-white border-0 ps-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%=product.sellerName%></span>
+                    </div>
+                    <p class="card-text mb-3 just text-end fw-light"><i class="bi bi-clock-history pe-2"></i><%=checkDate(product.createdAt)%></p>
+                    <a href="#" class="btn btn-primary w-100">View</a>
+                </div>
+            </div>
+            <p><%=newListings.pic%></p>
+            <%}%>
+        <% } else{ %>
+            <h4 class="ps-3 pt-3">No listing to display</h4>
+        <%} %>
     </div>
 </div>
+<script src="/js/checkDate.js"></script>

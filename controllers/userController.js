@@ -1,10 +1,12 @@
 const User = require('../models/userModel');
+const listing = require('../models/listingModel');
 const validation = require('../utils/validation');
 const bcrypt = require('../utils/bcrypt');
 const jwt = require('jsonwebtoken');
 
 const fs = require('fs')
 const { google } = require('googleapis');
+const { parse } = require('path');
 
 const user_add = async (req, res) => {
 	try {
@@ -66,40 +68,58 @@ const user_login = async (req, res) => {
 }
 
 const user_profile = async (req, res) => {
-    const logId = req.getUser.id;
-    const logEmail = req.getUser.email;
-    const logPic = req.getUser.pic;
-    const logUser = await User.findOne({_id: logId});
-    info = {
-        name: logUser.name,
-        email: logUser.email,
-        pic: logUser.pic || "/img/user-icon.png",
-        address: logUser.address || "Unknown"
+    const paramId = req.params.id;
+    const tokenId = req.getUser.id;
+    if(paramId===tokenId){
+        const logUser = await User.findOne({_id: paramId});
+        info = {
+            name: logUser.name,
+            email: logUser.email,
+            pic: logUser.pic || "/img/user-icon.png",
+            address: logUser.address || "N/A Address"
+        }
+        const newListings = await listing.find({sellerId: tokenId});
+        res.render('profile', {title: "Profile", id: tokenId, info, newListings});
+    } else {
+        res.render('badpage',{title: "Error 404"});
     }
-    res.render('profile',{
-        title: "Profile",
-        id: logUser.id,
-        userName: logUser.name,
-        pic: logPic,
-        info
-    });
 }
 
 const user_sell = async (req, res) => {
-    console.log(req.body);
-    res.redirect('sell');
+    try {
+        const newListing = new listing({
+            category: req.body.category,
+            pic: req.body.pic,
+            title: req.body.title,
+            condition: req.body.condition,
+            price: parseInt(req.body.price),
+            description: req.body.description,
+            brand: req.body.brand,
+            morethanOne: req.body.morethanOne==='true',
+            allowSms: req.body.allowSms==='true',
+            meetup: req.body.meetup,
+            deliver: req.body.deliver,
+            sellerId: req.getUser.id,
+            sellerName: req.getUser.name,
+            sellerPic: req.getUser.pic
+        });
+        await newListing.save();
+        res.redirect(`/user/profile/${req.getUser.id}`);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const user_sell_view = async (req, res) => {
-    const logId = req.getUser.id;
-    const logName = req.getUser.name;
-    const logPic = req.getUser.pic;
-    res.render('sell',{
-        title: "Sell",
-        id: logId,
-        userName: logName,
-        pic: logPic
-    });
+    const tokenId = req.getUser.id || "";
+    const logUser = await User.findOne({_id: tokenId});
+    const info = {
+        name: logUser.name || "",
+        email: logUser.email || "",
+        pic: logUser.pic || "/img/user-icon.png",
+        address: logUser.address || "N/A"
+    };
+    res.render('sell', {title: "Sell", id: tokenId, info});
 }
 
 const user_sell_upload = async (req, res) => {

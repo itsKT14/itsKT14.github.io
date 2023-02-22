@@ -31,6 +31,9 @@ app.get('/', (req, res)=>{
 });
 app.use('/', defaultRoutes);
 app.use('/user', userRoutes);
+app.get('*', (req, res)=>{
+    res.render('badpage',{title: "Error 404"});
+});
 
 
 //check port connection

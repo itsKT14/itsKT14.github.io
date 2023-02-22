@@ -37,18 +37,20 @@ const userSchema = new Schema({
         required: true
     },
     meetup: {
-        type: Boolean,
-        required: true
+        type: String
     },
     deliver: {
-        type: Boolean,
-        required: true
+        type: String
     },
     sellerId: {
         type: String,
         required: true
     },
     sellerName: {
+        type: String,
+        required: true
+    },
+    sellerPic: {
         type: String,
         required: true
     }

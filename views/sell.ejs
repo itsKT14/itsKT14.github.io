@@ -610,10 +610,11 @@
                             </div>
                         </div>
                     </div>
+                    <input type="text" id="category" name="category" class="d-none">
                 </ul>
             </div>
             <div class="form-floating mb-4">
-                <input type="text" class="form-control" id="floatingInput" name="title" placeholder="Name your listing">
+                <input type="text" class="form-control" id="floatingInput" name="title" placeholder="Name your listing" required>
                 <label for="floatingInput">Listing Title</label>
             </div>
             <h4 class="ps-1 mb-3">Item Details</h4>
@@ -637,10 +638,10 @@
             <p class="ps-1">Price</p>
             <div class="input-group mb-4">
                 <span class="input-group-text">PHP</span>
-                <input type="number" name="price" class="form-control">
+                <input type="number" name="price" class="form-control" required>
             </div>
             <p class="ps-1">Description</p>
-            <textarea class="form-control  mb-4" id="description" name="description" rows="3" placeholder="Describe what you are selling and include any details a buyer might be interested in. People love items with stories!"></textarea>
+            <textarea class="form-control  mb-4" id="description" name="description" rows="3" placeholder="Describe what you are selling and include any details a buyer might be interested in. People love items with stories!" required></textarea>
             <div class="form-floating mb-4">
                 <input type="text" class="form-control" id="brand" name="brand" placeholder="Name your listing">
                 <label for="brand">Brand (optional)</label>
@@ -660,16 +661,16 @@
             <h4 class="ps-1 pt-1 mb-3">Deal Method</h4>
             <p class="ps-1">Together we can do our part to stop the spread of COVID-19. Choose contactless delivery as much as possible.</p>
             <div class="form-check form-switch mb-2">
-                <input class="form-check-input" type="checkbox" role="switch" id="meetup" name="meetup" value="true" onclick="isMeetup()">
+                <input class="form-check-input" type="checkbox" role="switch" id="meetup" onclick="isMeetup()">
                 <label class="form-check-label" for="meetup">Meetup</label>
             </div>
-            <textarea class="form-control mb-3 d-none" id="meetupInfo" rows="3" placeholder="Add location, address, item and other information"></textarea>
+            <textarea class="form-control mb-3 d-none" id="meetupInfo" name="meetup" rows="3" placeholder="Add location, address, item and other information"></textarea>
             <div class="form-check form-switch mb-2">
-                <input class="form-check-input" type="checkbox" role="switch" id="deliver" name="deliver" value="true" onclick="isDeliver()">
+                <input class="form-check-input" type="checkbox" role="switch" id="deliver" onclick="isDeliver()">
                 <label class="form-check-label" for="deliver">
                     Mailing & Delivery</label>
             </div>
-            <textarea class="form-control mb-4 d-none" id="deliverInfo" rows="3" placeholder="Are there additional mailing or delivery fees and options?"></textarea>
+            <textarea class="form-control mb-4 d-none" id="deliverInfo" name="deliver" rows="3" placeholder="Are there additional mailing or delivery fees and options?"></textarea>
             <button class="btn btn-info float-end">&nbsp;List Now&nbsp;</button>
         </div>
     </form>

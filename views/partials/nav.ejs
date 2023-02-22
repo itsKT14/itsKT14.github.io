@@ -21,12 +21,12 @@
                 </li>
             </ul>
             <div id="tokenName" class="navbar-nav">
-                <%if(userName) {%>
+                <%if(info.name) {%>
                 <li class="nav-item dropdown">
                     
                     <a class="nav-link dropdown-toggle nav-menu" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img class="rounded-circle border border-dark mx-1" src="<%=pic%>" alt="" style="width: 25px; height: 25px;">
-                        Hello, <%=userName%>
+                        <img class="rounded-circle border border-dark mx-1" src="<%=info.pic%>" alt="" style="width: 25px; height: 25px;">
+                        Hello, <%=info.name%>
                     </a>
                     <ul class="dropdown-menu zindex">
                         <li><a class="dropdown-item nav-menu" href="/user/profile/<%=id%>">Profile</a></li>
@@ -35,7 +35,7 @@
                     </ul>
                 </li>
                 <%}%>
-                <%if(!userName) {%>
+                <%if(!info.name) {%>
                 <div class="nav-item">
                     <a class="nav-link nav-menu" href="/user/register">Register</a>
                 </div>
