@@ -49,7 +49,7 @@ const user_login = async (req, res) => {
 
         if(!isValid) return res.render('login', {message: "The password you've entered is incorrect.", title: "Login"});
 
-        const defaultPic = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png";
+        const defaultPic = "/img/user-icon.png";
         const getPic = logUser.pic || defaultPic;
         const token = jwt.sign({
             id: logUser.id,
@@ -99,9 +99,7 @@ const user_sell = async (req, res) => {
             allowSms: req.body.allowSms==='true',
             meetup: req.body.meetup,
             deliver: req.body.deliver,
-            sellerId: req.getUser.id,
-            sellerName: req.getUser.name,
-            sellerPic: req.getUser.pic
+            sellerId: req.getUser.id
         });
         await newListing.save();
         res.redirect(`/user/profile/${req.getUser.id}`);

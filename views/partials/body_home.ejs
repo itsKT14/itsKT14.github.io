@@ -37,8 +37,8 @@
 <div id="featured-categories" class="container-lg p-0 my-5">
     <h2 class="mb-3">New Listings</h2>
     <div class="container-fluid d-flex flex-wrap p-0 gap-3">
-        <% if (newListings.length > 0){ %>
-            <%for(let product of newListings){%>
+        <% if (items.length > 0){ %>
+            <%for(let product of items){%>
             <div class="card mb-2" style="width: 238px;">
                 <img src="<%=product.pic%>" class="card-img-top" alt="pic" style="width: 236px; height: 236px;">
                 <div class="card-body">
@@ -51,11 +51,10 @@
                         </span>
                         <span class="input-group-text bg-white border-0 ps-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%=product.sellerName%></span>
                     </div>
-                    <p class="card-text mb-3 just text-end fw-light"><i class="bi bi-clock-history pe-2"></i><%=checkDate(product.createdAt)%></p>
+                    <p class="card-text mb-3 just text-end fw-light"><i class="bi bi-clock-history pe-2"></i><%=product.date%></p>
                     <a href="#" class="btn btn-primary w-100">View</a>
                 </div>
             </div>
-            <p><%=newListings.pic%></p>
             <%}%>
         <% } else{ %>
             <h4 class="ps-3 pt-3">No listing to display</h4>

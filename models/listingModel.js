@@ -45,14 +45,6 @@ const userSchema = new Schema({
     sellerId: {
         type: String,
         required: true
-    },
-    sellerName: {
-        type: String,
-        required: true
-    },
-    sellerPic: {
-        type: String,
-        required: true
     }
 }, {timestamps: true});
 

@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
 const listing = require('../models/listingModel');
 const checkDate = require('../utils/checkDate');
+const {getName, getPic} = require('../utils/checkUser');
 
 const home_page = async (req, res) => {
     const tokenId = req.getUser.id || "";
@@ -35,8 +36,29 @@ const home_page = async (req, res) => {
     const newListings = await listing.find({title: {$regex: search, $options: 'i'}})
     .limit(limit)
     .skip(page*limit);
-
-    res.render('home', {title:"Home", id: tokenId, info, newListings, checkDate});
+    const items = [];
+    for(let product of newListings) {
+        const obj = {
+            id: product._id,
+            category: product.category,
+            pic: product.pic,
+            title: product.title,
+            condition: product.condition,
+            price: product.price,
+            description: product.description,
+            brand: product.brand,
+            morethan: product.morethan,
+            allowSms: product.allowSms,
+            meetup: product.meetup,
+            deliver: product.deliver,
+            sellerId: product.sellerId,
+            date: checkDate(product.createdAt),
+            sellerName: await getName(product.sellerId),
+            sellerPic: await getPic(product.sellerId)
+        }
+        items.push(obj)
+    }
+    res.render('home', {title:"Home", id: tokenId, info, items});
 }
 
 const settings_page = async (req, res) => {
