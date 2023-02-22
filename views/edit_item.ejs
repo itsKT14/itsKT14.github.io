@@ -1,681 +1,681 @@
 <%- include('./partials/head.ejs') %>
 <%- include('./partials/nav.ejs') %>
+<form action="/item/edit/<%=item._id%>" method="POST" class="">
 <div class="container-fluid shadow fixed-top notzindex" style="margin-top: 57px;">
     <div class="container-lg d-flex justify-content-between py-2 px-0 bg-white">
         <h4>What are you listing today?</h4>
-        <button class="btn btn-info">&nbsp;Update&nbsp;</button>
+        <button type="submit" class="btn btn-info">&nbsp;Update&nbsp;</button>
     </div>
 </div>
-<div class="container-lg" style="margin-top: 72px;">
-    <form action="/item/edit/<%=item._id%>" method="POST" class="d-flex gap-4 align-items-start mb-5">
-        <div class="col-5 shadow rounded rounded-3 p-4">
-            <label for="imglink" class="form-label">Image link:</label>
-            <div class="input-group mb-3">
-                <div class="input-group-text" id="imglink">
-                    <input class="form-check-input mt-0" type="radio" value="opt1" name="upload" onclick="uploadOption(this.value)" checked>
-                </div>
-                <span class="input-group-text" id="inputGroup-sizing-default">URL:</span>
-                <input type="text" class="form-control" id="formText" name="pic" value="<%=item.pic%>" aria-describedby="inputGroup-sizing-default" oninput="loadImg(this.value)">
+<div class="container-lg d-flex gap-4 align-items-start mb-5" style="margin-top: 72px;">
+    <div class="col-5 shadow rounded rounded-3 p-4">
+        <label for="imglink" class="form-label">Image link:</label>
+        <div class="input-group mb-3">
+            <div class="input-group-text" id="imglink">
+                <input class="form-check-input mt-0" type="radio" value="opt1" name="upload" onclick="uploadOption(this.value)" checked>
             </div>
-            <label for="imgupload" class="form-label">or Image upload:</label>
-            <div class="input-group mb-4">
-                <div class="input-group-text" id="imgupload">
-                    <input class="form-check-input mt-0" type="radio" value="opt2" name="upload" onclick="uploadOption(this.value)">
-                </div>
-                <input class="form-control" type="file" id="formFile" accept="image/jpeg, image/png, image/jpg" onchange="testFunc(this.files)" disabled>
+            <span class="input-group-text" id="inputGroup-sizing-default">URL:</span>
+            <input type="text" class="form-control" id="formText" name="pic" value="<%=item.pic%>" aria-describedby="inputGroup-sizing-default" oninput="loadImg(this.value)">
+        </div>
+        <label for="imgupload" class="form-label">or Image upload:</label>
+        <div class="input-group mb-4">
+            <div class="input-group-text" id="imgupload">
+                <input class="form-check-input mt-0" type="radio" value="opt2" name="upload" onclick="uploadOption(this.value)">
             </div>
-            <label for="preview" class="form-label">Image Preview:</label>
-            <div class="col border" style="height: 250px; width: 250px;">
-                <img id="preview" src="<%=item.pic%>" alt="" class="w-100 h-100 d-none" onload="isLoading()">
-                <div class="d-flex h-100 justify-content-center align-items-center d-none" id="spinner">
-                    <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
+            <input class="form-control" type="file" id="formFile" accept="image/jpeg, image/png, image/jpg" onchange="testFunc(this.files)" disabled>
+        </div>
+        <label for="preview" class="form-label">Image Preview:</label>
+        <div class="col border" style="height: 250px; width: 250px;">
+            <img id="preview" src="<%=item.pic%>" alt="" class="w-100 h-100 d-none" onload="isLoading()">
+            <div class="d-flex h-100 justify-content-center align-items-center d-none" id="spinner">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
                 </div>
             </div>
         </div>
-        <div class="col shadow rounded rounded-3 p-4">
-            <!-- <a class="btn btn-primary" href="/user/upload">upload test</a> -->
-            <div class="btn-group w-100 mb-4 category-menu">
-                <button id="chosenCategory" type="button" class="btn btn-white border-info col-11 py-2 border-end-0" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" style="text-align: left;"><%=item.category%> > <%=item.tag%></button>
-                <button type="button" class="btn btn-white border-info dropdown-toggle dropdown-toggle-split col-1 py-2 border-start-0" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                    <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                <ul id="category-dropdown" class="dropdown-menu scrollable-menu w-100 pt-0" role="menu">
-                    <div class="input-group">
-                        <span class="input-group-text bg-white border-0 border-bottom border-info rounded-0 ps-3 py-2" id="search"><i class="fa fa-search" style="color: #aaa;"></i></span>
-                        <input type="text" class="form-control shadow-none border-0 border-bottom border-info rounded-0 ps-0 py-2" placeholder="Search categories..." aria-label="Username" aria-describedby="basic-addon1" style="text-align: left;">
-                    </div>
-                    <div class="accordion accordion-flush" id="accordionFlushExample">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingOne">
-                                <button id="btn-flush-collapseOne" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                    Mobile Phones & Gadgets
-                                </button>
-                            </h2>
-                            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Mobile Phones & Gadgets',this.text,'One')">Mobile Phones</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Mobile Phones & Gadgets',this.text,'One')">Tablets</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Mobile Phones & Gadgets',this.text,'One')">Wearables & Smart Watches</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Mobile Phones & Gadgets',this.text,'One')">Mobile & Gadget Accessories</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Mobile Phones & Gadgets',this.text,'One')">Electronic Cigarettes</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Mobile Phones & Gadgets',this.text,'One')">Other Gadgets</a>
-                                        </div>
+    </div>
+    <div class="col shadow rounded rounded-3 p-4">
+        <!-- <a class="btn btn-primary" href="/user/upload">upload test</a> -->
+        <div class="btn-group w-100 mb-4 category-menu">
+            <button id="chosenCategory" type="button" class="btn btn-white border-info col-11 py-2 border-end-0" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" style="text-align: left;"><%=item.category%> > <%=item.tag%></button>
+            <button type="button" class="btn btn-white border-info dropdown-toggle dropdown-toggle-split col-1 py-2 border-start-0" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                <span class="visually-hidden">Toggle Dropdown</span>
+            </button>
+            <ul id="category-dropdown" class="dropdown-menu scrollable-menu w-100 pt-0" role="menu">
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-0 border-bottom border-info rounded-0 ps-3 py-2" id="search"><i class="fa fa-search" style="color: #aaa;"></i></span>
+                    <input type="text" class="form-control shadow-none border-0 border-bottom border-info rounded-0 ps-0 py-2" placeholder="Search categories..." aria-label="Username" aria-describedby="basic-addon1" style="text-align: left;">
+                </div>
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingOne">
+                            <button id="btn-flush-collapseOne" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                Mobile Phones & Gadgets
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Mobile Phones & Gadgets',this.text,'One')">Mobile Phones</a>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingTwo">
-                                <button id="btn-flush-collapseTwo" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                    Computers & Tech
-                                </button>
-                            </h2>
-                            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Computers & Tech',this.text,'Two')">Desktops</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Computers & Tech',this.text,'Two')">Laptops & Notebooks</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Computers & Tech',this.text,'Two')">Parts & Accessories</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Computers & Tech',this.text,'Two')">Printers, Scanners & Copiers</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Computers & Tech',this.text,'Two')">Office & Business Technology</a>
-                                        </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Mobile Phones & Gadgets',this.text,'One')">Tablets</a>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingThree">
-                                <button id="btn-flush-collapseThree" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                                    Men's Fashion
-                                </button>
-                            </h2>
-                            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Men's Fashion`,this.text,'Three')">Activewear</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Men's Fashion`,this.text,'Three')">Tops & Sets</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Men's Fashion`,this.text,'Three')">Bottoms</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Men's Fashion`,this.text,'Three')">Footwear</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Men's Fashion`,this.text,'Three')">Coats, Jackets and Outerwear</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Men's Fashion`,this.text,'Three')">Bags</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Men's Fashion`,this.text,'Three')">Watches & Accessories</a>
-                                        </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Mobile Phones & Gadgets',this.text,'One')">Wearables & Smart Watches</a>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingFour">
-                                <button id="btn-flush-collapseFour" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                                    Women's Fashion
-                                </button>
-                            </h2>
-                            <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Activewear</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Tops</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Bottoms</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Dresses & Sets</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Footwear</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Coats, Jackets and Outerwear</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Bags & Wallets</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Swimwear</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Maternity wear</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Watches & Accessories</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Undergarments & Loungewear</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Jewelry & Organizers</a>
-                                        </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Mobile Phones & Gadgets',this.text,'One')">Mobile & Gadget Accessories</a>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingFive">
-                                <button id="btn-flush-collapseFive" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
-                                    Furniture & Home Living
-                                </button>
-                            </h2>
-                            <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Furniture</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Outdoor Furniture</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Office Furniture & Fixtures</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Lighting & Fans</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Home Decor</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Home Fragrance</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Bedding & Towels</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Bathroom & Kitchen Fixtures</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Cleaning & Homecare Supplies</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Kitchenware & Tableware</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Security & Locks</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Gardening</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Home Improvement & Organization</a>
-                                        </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Mobile Phones & Gadgets',this.text,'One')">Electronic Cigarettes</a>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingSix">
-                                <button id="btn-flush-collapseSix" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
-                                    Video Gaming
-                                </button>
-                            </h2>
-                            <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Video Gaming',this.text,'Six')">Video Game Consoles</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Video Gaming',this.text,'Six')">Video Games</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Video Gaming',this.text,'Six')">Gaming Accessories</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingSeven">
-                                <button id="btn-flush-collapseSeven" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSeven">
-                                    Audio
-                                </button>
-                            </h2>
-                            <div id="flush-collapseSeven" class="accordion-collapse collapse" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Earphones</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Headphones & Headsets</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Microphones</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Voice Recorders</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Portable Music Players</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Portable Audio Accessories</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Soundbars, Speakers & Amplifiers</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Other Audio Equipment</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingEight">
-                                <button id="btn-flush-collapseEight" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseEight" aria-expanded="false" aria-controls="flush-collapseEight">
-                                    Photography
-                                </button>
-                            </h2>
-                            <div id="flush-collapseEight" class="accordion-collapse collapse" aria-labelledby="flush-headingEight" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Photography',this.text,'Eight')">Cameras</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Photography',this.text,'Eight')">Lens & Kits</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Photography',this.text,'Eight')">Drones</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Photography',this.text,'Eight')">Voice Cameras</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Photography',this.text,'Eight')">Photography Accessories</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingNine">
-                                <button id="btn-flush-collapseNine" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseNine" aria-expanded="false" aria-controls="flush-collapseNine">
-                                    TV & Home Appliances
-                                </button>
-                            </h2>
-                            <div id="flush-collapseNine" class="accordion-collapse collapse" aria-labelledby="flush-headingNine" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">TV & Entertainment</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Kitchen Appliances</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Air Conditioning and Heating</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Washing Machines and Dryers</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Vacuum Cleaner & Housekeeping</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Water Heater & Instant Showers</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Air Purifiers & Dehumidifiers</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Electrical, Adaptors & Sockets</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Irons & Steamers</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Other Home Appliances</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingTen">
-                                <button id="btn-flush-collapseTen" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTen" aria-expanded="false" aria-controls="flush-collapseTen">
-                                    Luxury
-                                </button>
-                            </h2>
-                            <div id="flush-collapseTen" class="accordion-collapse collapse" aria-labelledby="flush-headingTen" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Luxury',this.text,'Ten')">Bags & Wallets</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Luxury',this.text,'Ten')">Apparel</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Luxury',this.text,'Ten')">Accessories</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Luxury',this.text,'Ten')">Watches</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Luxury',this.text,'Ten')">Sneakers & Footwear</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingEleven">
-                                <button id="btn-flush-collapseEleven" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseEleven" aria-expanded="false" aria-controls="flush-collapseEleven">
-                                    Babies & Kids
-                                </button>
-                            </h2>
-                            <div id="flush-collapseEleven" class="accordion-collapse collapse" aria-labelledby="flush-headingEleven" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Babies & Kids',this.text,'Eleven')">Babies & Kids Fashion</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Babies & Kids',this.text,'Eleven')">Baby Nursery & Kids Furniture</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Babies & Kids',this.text,'Eleven')">Going Out</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Babies & Kids',this.text,'Eleven')">Bathing & Changing</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Babies & Kids',this.text,'Eleven')">Baby Monitors</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Babies & Kids',this.text,'Eleven')">Maternity Care</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Babies & Kids',this.text,'Eleven')">Infant Playtime</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingTwelve">
-                                <button id="btn-flush-collapseTwelve" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwelve" aria-expanded="false" aria-controls="flush-collapseTwelve">
-                                    Hobbies & Toys
-                                </button>
-                            </h2>
-                            <div id="flush-collapseTwelve" class="accordion-collapse collapse" aria-labelledby="flush-headingTwelve" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Hobbies & Toys',this.text,'Twelve')">Toys & Games</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Hobbies & Toys',this.text,'Twelve')">Music & Media</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Hobbies & Toys',this.text,'Twelve')">Book & Magazines</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Hobbies & Toys',this.text,'Twelve')">Stationary & Craft</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Hobbies & Toys',this.text,'Twelve')">Momorabilia & Collectibles</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Hobbies & Toys',this.text,'Twelve')">Travel</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingThirteen">
-                                <button id="btn-flush-collapseThirteen" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThirteen" aria-expanded="false" aria-controls="flush-collapseThirteen">
-                                    Beauty & Personal Care
-                                </button>
-                            </h2>
-                            <div id="flush-collapseThirteen" class="accordion-collapse collapse" aria-labelledby="flush-headingThirteen" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Sanitizers & Disinfectants</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Hands & Nails</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Bath & Body</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Face</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Hair</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Ear Care</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Vision Care</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Foot Care</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Oral Care</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Sanitary Hygiene</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Men's Grooming</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Fragrance & Deodorants</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingFourteen">
-                                <button id="btn-flush-collapseFourteen" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFourteen" aria-expanded="false" aria-controls="flush-collapseFourteen">
-                                    Health & Nutrition
-                                </button>
-                            </h2>
-                            <div id="flush-collapseFourteen" class="accordion-collapse collapse" aria-labelledby="flush-headingFourteen" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Insect Repellents</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Family Planning</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Massage Devices</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Assistive & Rehabilatory Aids</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Face Mask & Face Shields</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Thermometers</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Medical Supplies & Tools</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Health Supplements</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Braces, Support & Proection</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Heath Monitors & Weighing Scales</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingFifteen">
-                                <button id="btn-flush-collapseFifteen" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFifteen" aria-expanded="false" aria-controls="flush-collapseFifteen">
-                                    Sports Equipment
-                                </button>
-                            </h2>
-                            <div id="flush-collapseFifteen" class="accordion-collapse collapse" aria-labelledby="flush-headingFifteen" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Sports Equipment',this.text,'Fifteen')">Sports & Games</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Sports Equipment',this.text,'Fifteen')">Exercise & Fitness</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Sports Equipment',this.text,'Fifteen')">Bicycles & Parts</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Sports Equipment',this.text,'Fifteen')">Fishing</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Sports Equipment',this.text,'Fifteen')">Hiking & Camping</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Sports Equipment',this.text,'Fifteen')">Other Sports Equipment and Supplies</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header w-100" id="flush-headingSixteen">
-                                <button id="btn-flush-collapseSixteen" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSixteen" aria-expanded="false" aria-controls="flush-collapseSixteen">
-                                    Pet Supplies
-                                </button>
-                            </h2>
-                            <div id="flush-collapseSixteen" class="accordion-collapse collapse" aria-labelledby="flush-headingSixteen" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0 ps-3 pb-1 pt-1">
-                                    <div class="navbar-nav col">
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Pet Supplies',this.text,'Sixteen')">Pet Food</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Pet Supplies',this.text,'Sixteen')">Homes & Other Pet Accessories</a>
-                                        </div>
-                                        <div class="nav-item w-100 d-flex align-items-center category-menu">
-                                            <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Pet Supplies',this.text,'Sixteen')">Heath & Grooming</a>
-                                        </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Mobile Phones & Gadgets',this.text,'One')">Other Gadgets</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <input type="text" id="category" name="category" class="d-none">
-                    <input type="text" id="tag" name="tag" class="d-none">
-                </ul>
-            </div>
-            <div class="form-floating mb-4">
-                <input type="text" class="form-control" id="floatingInput" name="title" placeholder="Name your listing" value="<%=item.title%>" required>
-                <label for="floatingInput">Listing Title</label>
-            </div>
-            <h4 class="ps-1 mb-3">Item Details</h4>
-            <p class="ps-1">Condition</p>
-            <div class="mb-4">
-                <input type="radio" class="btn-check" name="condition" id="brandnew" autocomplete="off" value="Brand new" <%=item.condition=="Brand new"?"checked":""%>>
-                <label class="btn btn-outline-info rounded-pill text-dark me-3" for="brandnew">Brand new</label>
-    
-                <input type="radio" class="btn-check" name="condition" id="likenew" autocomplete="off" value="Like new" <%=item.condition=="Like new"?"checked":""%>>
-                <label class="btn btn-outline-info rounded-pill text-dark me-3" for="likenew">&nbsp;Like new&nbsp;</label>
-    
-                <input type="radio" class="btn-check" name="condition" id="lightuse" autocomplete="off" value="Lightly used" <%=item.condition=="Lightly used"?"checked":""%>>
-                <label class="btn btn-outline-info rounded-pill text-dark me-3" for="lightuse">Lightly used</label>
-                
-                <input type="radio" class="btn-check" name="condition" id="welluse" autocomplete="off" value="Well used" <%=item.condition=="Well used"?"checked":""%>>
-                <label class="btn btn-outline-info rounded-pill text-dark me-3" for="welluse">&nbsp;Well used&nbsp;</label>
-    
-                <input type="radio" class="btn-check" name="condition" id="heavyuse" autocomplete="off" value="Heavily used" <%=item.condition=="Heavily used"?"checked":""%>>
-                <label class="btn btn-outline-info rounded-pill text-dark me-3" for="heavyuse">Heavily used</label>
-            </div>
-            <p class="ps-1">Price</p>
-            <div class="input-group mb-4">
-                <span class="input-group-text">PHP</span>
-                <input type="number" name="price" class="form-control" value="<%=item.price%>" required>
-            </div>
-            <p class="ps-1">Description</p>
-            <textarea class="form-control  mb-4" id="description" name="description" rows="3" placeholder="Describe what you are selling and include any details a buyer might be interested in. People love items with stories!" required><%=item.description%></textarea>
-            <div class="form-floating mb-4">
-                <input type="text" class="form-control" id="brand" name="brand" value="<%=item.brand%>" placeholder="Name your listing">
-                <label for="brand">Brand (optional)</label>
-            </div>
-            <h4 class="ps-1 mb-3">Optional Details</h4>
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="isMoreThanOne" name="morethanOne" value="true" <%=item.morethanOne==true?'checked':''%>>
-                <label class="form-check-label" for="isMoreThanOne">I have more than one of the same item</label>
-                <p class="fw-light">Check this box if you have more than one of this item</p>
-            </div>
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="allowSms" name="allowSms" value="true" <%=item.allowSms==true?'checked':''%>>
-                <label class="form-check-label" for="allowSms">
-                Allow buyers to SMS/Call me on this listing</label>
-                <p class="fw-light">Turning this on means that your mobile number will be public to buyers, who can then reach out directly to you.</p>
-            </div>
-            <h4 class="ps-1 pt-1 mb-3">Deal Method</h4>
-            <p class="ps-1">Together we can do our part to stop the spread of COVID-19. Choose contactless delivery as much as possible.</p>
-            <div class="form-check form-switch mb-2">
-                <input class="form-check-input" type="checkbox" role="switch" id="meetup" onclick="isMeetup()" <%=item.meetup!==""?'checked':''%>>
-                <label class="form-check-label" for="meetup">Meetup</label>
-            </div>
-            <textarea class="form-control mb-3 <%=item.meetup!==""?"":"d-none"%>" id="meetupInfo" name="meetup" rows="3" placeholder="Add location, address, item and other information"><%=item.meetup!==""?item.meetup:''%></textarea>
-            <div class="form-check form-switch mb-2">
-                <input class="form-check-input" type="checkbox" role="switch" id="deliver" onclick="isDeliver()" <%=item.deliver!==""?'checked':''%>>
-                <label class="form-check-label" for="deliver">
-                    Mailing & Delivery</label>
-            </div>
-            <textarea class="form-control mb-4 <%=item.deliver!==""?"":"d-none"%>" id="deliverInfo" name="deliver" rows="3" placeholder="Are there additional mailing or delivery fees and options?"><%=item.deliver!==""?item.deliver:''%></textarea>
-            <button class="btn btn-info float-end">&nbsp;Update&nbsp;</button>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingTwo">
+                            <button id="btn-flush-collapseTwo" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                Computers & Tech
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Computers & Tech',this.text,'Two')">Desktops</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Computers & Tech',this.text,'Two')">Laptops & Notebooks</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Computers & Tech',this.text,'Two')">Parts & Accessories</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Computers & Tech',this.text,'Two')">Printers, Scanners & Copiers</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Computers & Tech',this.text,'Two')">Office & Business Technology</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingThree">
+                            <button id="btn-flush-collapseThree" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                Men's Fashion
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Men's Fashion`,this.text,'Three')">Activewear</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Men's Fashion`,this.text,'Three')">Tops & Sets</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Men's Fashion`,this.text,'Three')">Bottoms</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Men's Fashion`,this.text,'Three')">Footwear</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Men's Fashion`,this.text,'Three')">Coats, Jackets and Outerwear</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Men's Fashion`,this.text,'Three')">Bags</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Men's Fashion`,this.text,'Three')">Watches & Accessories</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingFour">
+                            <button id="btn-flush-collapseFour" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                Women's Fashion
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Activewear</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Tops</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Bottoms</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Dresses & Sets</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Footwear</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Coats, Jackets and Outerwear</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Bags & Wallets</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Swimwear</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Maternity wear</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Watches & Accessories</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Undergarments & Loungewear</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory(`Women's Fashion`,this.text,'Four')">Jewelry & Organizers</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingFive">
+                            <button id="btn-flush-collapseFive" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                Furniture & Home Living
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Furniture</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Outdoor Furniture</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Office Furniture & Fixtures</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Lighting & Fans</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Home Decor</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Home Fragrance</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Bedding & Towels</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Bathroom & Kitchen Fixtures</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Cleaning & Homecare Supplies</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Kitchenware & Tableware</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Security & Locks</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Gardening</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Furniture & Home Living',this.text,'Five')">Home Improvement & Organization</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingSix">
+                            <button id="btn-flush-collapseSix" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                                Video Gaming
+                            </button>
+                        </h2>
+                        <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Video Gaming',this.text,'Six')">Video Game Consoles</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Video Gaming',this.text,'Six')">Video Games</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Video Gaming',this.text,'Six')">Gaming Accessories</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingSeven">
+                            <button id="btn-flush-collapseSeven" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSeven">
+                                Audio
+                            </button>
+                        </h2>
+                        <div id="flush-collapseSeven" class="accordion-collapse collapse" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Earphones</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Headphones & Headsets</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Microphones</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Voice Recorders</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Portable Music Players</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Portable Audio Accessories</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Soundbars, Speakers & Amplifiers</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Audio',this.text,'Seven')">Other Audio Equipment</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingEight">
+                            <button id="btn-flush-collapseEight" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseEight" aria-expanded="false" aria-controls="flush-collapseEight">
+                                Photography
+                            </button>
+                        </h2>
+                        <div id="flush-collapseEight" class="accordion-collapse collapse" aria-labelledby="flush-headingEight" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Photography',this.text,'Eight')">Cameras</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Photography',this.text,'Eight')">Lens & Kits</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Photography',this.text,'Eight')">Drones</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Photography',this.text,'Eight')">Voice Cameras</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Photography',this.text,'Eight')">Photography Accessories</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingNine">
+                            <button id="btn-flush-collapseNine" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseNine" aria-expanded="false" aria-controls="flush-collapseNine">
+                                TV & Home Appliances
+                            </button>
+                        </h2>
+                        <div id="flush-collapseNine" class="accordion-collapse collapse" aria-labelledby="flush-headingNine" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">TV & Entertainment</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Kitchen Appliances</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Air Conditioning and Heating</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Washing Machines and Dryers</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Vacuum Cleaner & Housekeeping</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Water Heater & Instant Showers</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Air Purifiers & Dehumidifiers</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Electrical, Adaptors & Sockets</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Irons & Steamers</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('TV & Home Appliances',this.text,'Nine')">Other Home Appliances</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingTen">
+                            <button id="btn-flush-collapseTen" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTen" aria-expanded="false" aria-controls="flush-collapseTen">
+                                Luxury
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTen" class="accordion-collapse collapse" aria-labelledby="flush-headingTen" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Luxury',this.text,'Ten')">Bags & Wallets</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Luxury',this.text,'Ten')">Apparel</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Luxury',this.text,'Ten')">Accessories</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Luxury',this.text,'Ten')">Watches</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Luxury',this.text,'Ten')">Sneakers & Footwear</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingEleven">
+                            <button id="btn-flush-collapseEleven" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseEleven" aria-expanded="false" aria-controls="flush-collapseEleven">
+                                Babies & Kids
+                            </button>
+                        </h2>
+                        <div id="flush-collapseEleven" class="accordion-collapse collapse" aria-labelledby="flush-headingEleven" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Babies & Kids',this.text,'Eleven')">Babies & Kids Fashion</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Babies & Kids',this.text,'Eleven')">Baby Nursery & Kids Furniture</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Babies & Kids',this.text,'Eleven')">Going Out</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Babies & Kids',this.text,'Eleven')">Bathing & Changing</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Babies & Kids',this.text,'Eleven')">Baby Monitors</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Babies & Kids',this.text,'Eleven')">Maternity Care</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Babies & Kids',this.text,'Eleven')">Infant Playtime</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingTwelve">
+                            <button id="btn-flush-collapseTwelve" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwelve" aria-expanded="false" aria-controls="flush-collapseTwelve">
+                                Hobbies & Toys
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwelve" class="accordion-collapse collapse" aria-labelledby="flush-headingTwelve" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Hobbies & Toys',this.text,'Twelve')">Toys & Games</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Hobbies & Toys',this.text,'Twelve')">Music & Media</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Hobbies & Toys',this.text,'Twelve')">Book & Magazines</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Hobbies & Toys',this.text,'Twelve')">Stationary & Craft</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Hobbies & Toys',this.text,'Twelve')">Momorabilia & Collectibles</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Hobbies & Toys',this.text,'Twelve')">Travel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingThirteen">
+                            <button id="btn-flush-collapseThirteen" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThirteen" aria-expanded="false" aria-controls="flush-collapseThirteen">
+                                Beauty & Personal Care
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThirteen" class="accordion-collapse collapse" aria-labelledby="flush-headingThirteen" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Sanitizers & Disinfectants</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Hands & Nails</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Bath & Body</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Face</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Hair</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Ear Care</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Vision Care</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Foot Care</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Oral Care</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Sanitary Hygiene</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Men's Grooming</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Beauty & Personal Care',this.text,'Thirteen')">Fragrance & Deodorants</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingFourteen">
+                            <button id="btn-flush-collapseFourteen" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFourteen" aria-expanded="false" aria-controls="flush-collapseFourteen">
+                                Health & Nutrition
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFourteen" class="accordion-collapse collapse" aria-labelledby="flush-headingFourteen" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Insect Repellents</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Family Planning</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Massage Devices</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Assistive & Rehabilatory Aids</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Face Mask & Face Shields</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Thermometers</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Medical Supplies & Tools</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Health Supplements</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Braces, Support & Proection</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Health & Nutrition',this.text,'Fourteen')">Heath Monitors & Weighing Scales</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingFifteen">
+                            <button id="btn-flush-collapseFifteen" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFifteen" aria-expanded="false" aria-controls="flush-collapseFifteen">
+                                Sports Equipment
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFifteen" class="accordion-collapse collapse" aria-labelledby="flush-headingFifteen" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Sports Equipment',this.text,'Fifteen')">Sports & Games</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Sports Equipment',this.text,'Fifteen')">Exercise & Fitness</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Sports Equipment',this.text,'Fifteen')">Bicycles & Parts</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Sports Equipment',this.text,'Fifteen')">Fishing</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Sports Equipment',this.text,'Fifteen')">Hiking & Camping</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Sports Equipment',this.text,'Fifteen')">Other Sports Equipment and Supplies</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header w-100" id="flush-headingSixteen">
+                            <button id="btn-flush-collapseSixteen" class="accordion-button collapsed category-menu cat-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSixteen" aria-expanded="false" aria-controls="flush-collapseSixteen">
+                                Pet Supplies
+                            </button>
+                        </h2>
+                        <div id="flush-collapseSixteen" class="accordion-collapse collapse" aria-labelledby="flush-headingSixteen" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body p-0 ps-3 pb-1 pt-1">
+                                <div class="navbar-nav col">
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Pet Supplies',this.text,'Sixteen')">Pet Food</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Pet Supplies',this.text,'Sixteen')">Homes & Other Pet Accessories</a>
+                                    </div>
+                                    <div class="nav-item w-100 d-flex align-items-center category-menu">
+                                        <a class="nav-link m-0 p-2 w-100" style="cursor: pointer" onclick="pickCategory('Pet Supplies',this.text,'Sixteen')">Heath & Grooming</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="text" id="category" name="category" class="d-none">
+                <input type="text" id="tag" name="tag" class="d-none">
+            </ul>
         </div>
-    </form>
+        <div class="form-floating mb-4">
+            <input type="text" class="form-control" id="floatingInput" name="title" placeholder="Name your listing" value="<%=item.title%>" required>
+            <label for="floatingInput">Listing Title</label>
+        </div>
+        <h4 class="ps-1 mb-3">Item Details</h4>
+        <p class="ps-1">Condition</p>
+        <div class="mb-4">
+            <input type="radio" class="btn-check" name="condition" id="brandnew" autocomplete="off" value="Brand new" <%=item.condition=="Brand new"?"checked":""%>>
+            <label class="btn btn-outline-info rounded-pill text-dark me-3" for="brandnew">Brand new</label>
+
+            <input type="radio" class="btn-check" name="condition" id="likenew" autocomplete="off" value="Like new" <%=item.condition=="Like new"?"checked":""%>>
+            <label class="btn btn-outline-info rounded-pill text-dark me-3" for="likenew">&nbsp;Like new&nbsp;</label>
+
+            <input type="radio" class="btn-check" name="condition" id="lightuse" autocomplete="off" value="Lightly used" <%=item.condition=="Lightly used"?"checked":""%>>
+            <label class="btn btn-outline-info rounded-pill text-dark me-3" for="lightuse">Lightly used</label>
+            
+            <input type="radio" class="btn-check" name="condition" id="welluse" autocomplete="off" value="Well used" <%=item.condition=="Well used"?"checked":""%>>
+            <label class="btn btn-outline-info rounded-pill text-dark me-3" for="welluse">&nbsp;Well used&nbsp;</label>
+
+            <input type="radio" class="btn-check" name="condition" id="heavyuse" autocomplete="off" value="Heavily used" <%=item.condition=="Heavily used"?"checked":""%>>
+            <label class="btn btn-outline-info rounded-pill text-dark me-3" for="heavyuse">Heavily used</label>
+        </div>
+        <p class="ps-1">Price</p>
+        <div class="input-group mb-4">
+            <span class="input-group-text">PHP</span>
+            <input type="number" name="price" class="form-control" value="<%=item.price%>" required>
+        </div>
+        <p class="ps-1">Description</p>
+        <textarea class="form-control  mb-4" id="description" name="description" rows="3" placeholder="Describe what you are selling and include any details a buyer might be interested in. People love items with stories!" required><%=item.description%></textarea>
+        <div class="form-floating mb-4">
+            <input type="text" class="form-control" id="brand" name="brand" value="<%=item.brand%>" placeholder="Name your listing">
+            <label for="brand">Brand (optional)</label>
+        </div>
+        <h4 class="ps-1 mb-3">Optional Details</h4>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="isMoreThanOne" name="morethanOne" value="true" <%=item.morethanOne==true?'checked':''%>>
+            <label class="form-check-label" for="isMoreThanOne">I have more than one of the same item</label>
+            <p class="fw-light">Check this box if you have more than one of this item</p>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="allowSms" name="allowSms" value="true" <%=item.allowSms==true?'checked':''%>>
+            <label class="form-check-label" for="allowSms">
+            Allow buyers to SMS/Call me on this listing</label>
+            <p class="fw-light">Turning this on means that your mobile number will be public to buyers, who can then reach out directly to you.</p>
+        </div>
+        <h4 class="ps-1 pt-1 mb-3">Deal Method</h4>
+        <p class="ps-1">Together we can do our part to stop the spread of COVID-19. Choose contactless delivery as much as possible.</p>
+        <div class="form-check form-switch mb-2">
+            <input class="form-check-input" type="checkbox" role="switch" id="meetup" onclick="isMeetup()" <%=item.meetup!==""?'checked':''%>>
+            <label class="form-check-label" for="meetup">Meetup</label>
+        </div>
+        <textarea class="form-control mb-3 <%=item.meetup!==""?"":"d-none"%>" id="meetupInfo" name="meetup" rows="3" placeholder="Add location, address, item and other information"><%=item.meetup!==""?item.meetup:''%></textarea>
+        <div class="form-check form-switch mb-2">
+            <input class="form-check-input" type="checkbox" role="switch" id="deliver" onclick="isDeliver()" <%=item.deliver!==""?'checked':''%>>
+            <label class="form-check-label" for="deliver">
+                Mailing & Delivery</label>
+        </div>
+        <textarea class="form-control mb-4 <%=item.deliver!==""?"":"d-none"%>" id="deliverInfo" name="deliver" rows="3" placeholder="Are there additional mailing or delivery fees and options?"><%=item.deliver!==""?item.deliver:''%></textarea>
+        <button type="submit" class="btn btn-info float-end">&nbsp;Update&nbsp;</button>
+    </div>
 </div>
+</form>
 <script src="/js/script.js"></script>
 <%- include('./partials/categories.ejs') %>
 <%- include('./partials/foot.ejs') %>
