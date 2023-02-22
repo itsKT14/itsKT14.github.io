@@ -72,5 +72,6 @@ function pickCategory(category, tag, accordionNumber) {
 	document.getElementById(accordionBody).classList.remove('show');
 	categoryBtn.hide();
 
-	document.getElementById('category').value = category+" > "+tag;
+	document.getElementById('category').value = category;
+	document.getElementById('tag').value = tag;
 }

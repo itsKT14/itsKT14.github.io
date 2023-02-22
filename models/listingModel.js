@@ -2,11 +2,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+    pic: {
+        type: String,
+        required: true
+    },
     category: {
         type: String,
         required: true
     },
-    pic: {
+    tag: {
         type: String,
         required: true
     },
@@ -44,6 +48,10 @@ const userSchema = new Schema({
     },
     sellerId: {
         type: String,
+        required: true
+    },
+    sold: {
+        type: Boolean,
         required: true
     }
 }, {timestamps: true});

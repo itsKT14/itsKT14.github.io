@@ -33,7 +33,7 @@ const home_page = async (req, res) => {
     const startOfPage = (page+1) == 1 ? "1" : (limit*page)+1;
     const endOfPage = (page+1) * limit <= total ? (page+1) * limit : total;
     
-    const newListings = await listing.find({title: {$regex: search, $options: 'i'}})
+    const newListings = await listing.find({title: {$regex: search, $options: 'i'}} && {sold: false})
     .limit(limit)
     .skip(page*limit);
     const items = [];
@@ -41,6 +41,7 @@ const home_page = async (req, res) => {
         const obj = {
             id: product._id,
             category: product.category,
+            tag: product.tag,
             pic: product.pic,
             title: product.title,
             condition: product.condition,
@@ -73,7 +74,31 @@ const settings_page = async (req, res) => {
     res.render('settings', {title:"Settings", id: tokenId, info});
 }
 
+const item_page = async (req, res) => {
+    const tokenId = req.getUser.id || "";
+    let info = {
+        name: "",
+        email: "",
+        pic: "",
+        address: ""
+    };
+    if(tokenId) {
+        const logUser = await User.findOne({_id: tokenId});
+        info = {
+            name: logUser.name || "",
+            email: logUser.email || "",
+            pic: logUser.pic || "/img/user-icon.png",
+            address: logUser.address || "N/A"
+        };
+    }
+    const itemId = req.params.id;
+    const item = await listing.findOne({_id: itemId});
+    console.log(item);
+    res.render('item', {title:"Item", id: tokenId, info});
+}
+
 module.exports = {
     home_page,
-    settings_page
+    settings_page,
+    item_page
 }

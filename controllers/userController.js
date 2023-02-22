@@ -88,8 +88,9 @@ const user_profile = async (req, res) => {
 const user_sell = async (req, res) => {
     try {
         const newListing = new listing({
-            category: req.body.category,
             pic: req.body.pic,
+            category: req.body.category,
+            tag: req.body.tag,
             title: req.body.title,
             condition: req.body.condition,
             price: parseInt(req.body.price),
@@ -99,7 +100,8 @@ const user_sell = async (req, res) => {
             allowSms: req.body.allowSms==='true',
             meetup: req.body.meetup,
             deliver: req.body.deliver,
-            sellerId: req.getUser.id
+            sellerId: req.getUser.id,
+            sold: false
         });
         await newListing.save();
         res.redirect(`/user/profile/${req.getUser.id}`);
