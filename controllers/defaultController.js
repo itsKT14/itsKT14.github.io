@@ -70,7 +70,7 @@ const settings_page = async (req, res) => {
         email: logUser.email || "",
         pic: logUser.pic || "/img/user-icon.png",
         address: logUser.address || "",
-        phone: logUser.phone,
+        phone: logUser.phone || "",
         showPic: logUser.pic || ""
     };
     res.render('settings', {title:"Settings", id: tokenId, info});

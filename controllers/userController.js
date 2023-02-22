@@ -24,7 +24,7 @@ const user_add = async (req, res) => {
                 password: await bcrypt.securePassword(req.body.password),
                 pic: "",
                 address: "",
-                phone: 0
+                phone: null
             });
             await newUser.save();
             res.render('login', {message: "You have successfuly created an account!", title: "Login"});
