@@ -27,7 +27,7 @@ function isDeliver() {
 
 function loadImg(link) {
 	if ( document.getElementById("preview").classList.contains('d-none') ) {
-		console.log('Preview is already hidden');
+
 	} else {
 		document.getElementById("preview").classList.add('d-none');
 	}
@@ -35,7 +35,7 @@ function loadImg(link) {
 		document.getElementById("spinner").classList.remove('d-none');
 	} else {
 		if ( document.getElementById("spinner").classList.contains('d-none') ) {
-			console.log('No link input');
+
 		} else {
 			document.getElementById("spinner").classList.add('d-none');
 		}
@@ -45,7 +45,7 @@ function loadImg(link) {
 
 function isLoading() {
 	if ( document.getElementById("spinner").classList.contains('d-none') ) {
-		console.log('Error in class, d-none is existing, cause of reloading the page');
+
 	} else {
 		document.getElementById("spinner").classList.add('d-none');
 	}

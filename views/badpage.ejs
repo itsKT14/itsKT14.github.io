@@ -1,4 +1,15 @@
-<div class="container-lg d-flex align-items-center">
-    <h1>ERROR 404</h1>
-    <h2>No Page Found</h2>
+<%- include('./partials/head.ejs') %>
+<%- include('./partials/nav.ejs') %>
+<div class="error-page">
+    <div class="content">
+        <img src="/img/404.jpg" alt="">
+        <h2>Opps! Page Not Found</h2>
+        <p>Sorry, You can search for the page you want here or return to the homepage.</p>
+        <div class="btns">
+            <a href="#">Go to home</a>
+        </div>
+    </div>
 </div>
+<%- include('./partials/categories.ejs') %>
+<%- include('./partials/footer.ejs') %>
+<%- include('./partials/foot.ejs') %>

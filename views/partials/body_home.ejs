@@ -24,8 +24,9 @@
     <p class="hero-slogan">A better way to buy and sell locally</p>
     <a href="#newlist" class="btn btn-primary btn-lg rounded-pill">Explore</a>
 </div>
-<div id="featured-categories" class="container-lg p-0 mt-5">
-    <h2 class="mb-3">Featured Categories</h2>
+<p id="featured-categories"></p>
+<div class="container-lg p-0 mt-5">
+    <h2 class="mb-3 pt-2">Featured Categories</h2>
     <div class="container-fluid d-flex flex-wrap p-0 gap-3">
         <div class="d-flex flex-column">
             <img src="https://lzd-img-global.slatic.net/g/p/29227ea1f64a5ed17c6e15820e76d53e.jpg_720x720q80.jpg_.webp" alt="pic" class="category-card rounded rounded-4 border">
@@ -47,17 +48,19 @@
             <img src="https://www.ikea.com/ph/en/images/products/lack-tv-unit-black-brown__0955265_pe803705_s5.jpg?f=s" alt="pic" class="category-card rounded rounded-4 border">
             <p class="fs-5 mt-1">TV & Home Appliances</p>
         </div>
+        <p id="newlist"></p>
     </div>
+    
 </div>
-<div id="featured-categories" class="container-lg p-0 my-5">
-    <h2 id="newlist" class="mb-3">New Listings</h2>
+<div class="container-lg p-0 my-5">
+    <h2 class="mb-3">New Listings</h2>
     <div class="container-fluid d-flex flex-wrap p-0 gap-3">
         <% if (items.length > 0){ %>
             <%for(let product of items){%>
             <div class="card mb-2" style="width: 251px;">
                 <img src="<%=product.pic%>" class="card-img-top" alt="pic" style="width: 249px; height: 249px;">
                 <div class="card-body">
-                    <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%=product.title%></h5>
+                    <h5 class="card-title pb-1" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%=product.title%></h5>
                     <p class="card-text mb-0">PHP <%=product.price%></p>
                     <p class="card-text mb-1"><%=product.condition%></p>
                     <div class="input-group mb-1">
@@ -76,4 +79,3 @@
         <%} %>
     </div>
 </div>
-<script src="/js/checkDate.js"></script>

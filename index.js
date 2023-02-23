@@ -6,6 +6,7 @@ const dbConnect = require('./config/dbConnection');
 const cors = require('cors');
 const defaultRoutes = require('./routes/defaultRoutes');
 const userRoutes = require('./routes/userRoutes');
+const verify = require('./utils/auth');
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -31,10 +32,16 @@ app.get('/', (req, res)=>{
 });
 app.use('/', defaultRoutes);
 app.use('/user', userRoutes);
-app.get('*', (req, res)=>{
-    res.render('badpage',{title: "Error 404"});
-});
-
+app.use( verify.homePageAuth, (req, res, next)=>{
+    const tokenId = req.getUser.id || "";
+    const info = {
+        name: req.getUser.name || "",
+        email: req.getUser.email || "",
+        pic: req.getUser.pic || "/img/user-icon.png",
+        address: req.getUser.address || "N/A"
+    };
+    res.render('badpage', {title: "Error 404", id: tokenId, info});
+})
 
 //check port connection
 const port = process.env.PORT || 8080;

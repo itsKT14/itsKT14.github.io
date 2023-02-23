@@ -43,10 +43,9 @@ const user_login = async (req, res) => {
             return  res.render('login', {message: errorMessage, title: "Login"});
         }
         const logUser = await User.findOne({email: req.body.email});
-        const isValid = await bcrypt.comparePassword(req.body.password, logUser.password);
-
         if(!logUser) return res.render('login', {message: "The email you've entered is not connected to an account.", title: "Login"});
 
+        const isValid = await bcrypt.comparePassword(req.body.password, logUser.password);
         if(!isValid) return res.render('login', {message: "The password you've entered is incorrect.", title: "Login"});
 
         const defaultPic = "/img/user-icon.png";
