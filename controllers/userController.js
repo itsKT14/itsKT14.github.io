@@ -71,7 +71,7 @@ const user_profile = async (req, res) => {
     const tokenId = req.getUser.id;
     if(paramId===tokenId){
         const logUser = await User.findOne({_id: paramId});
-        info = {
+        const info = {
             name: logUser.name,
             email: logUser.email,
             pic: logUser.pic || "/img/user-icon.png",
@@ -80,7 +80,14 @@ const user_profile = async (req, res) => {
         const newListings = await listing.find({sellerId: tokenId}).sort({sold: false});
         res.render('profile', {title: "Profile", id: tokenId, info, newListings});
     } else {
-        res.render('badpage',{title: "Error 404"});
+        const logUser = await User.findOne({_id: tokenId});
+        const info = {
+            name: logUser.name || "",
+            email: logUser.email || "",
+            pic: logUser.pic || "/img/user-icon.png",
+            address: logUser.address || "N/A"
+        };
+        res.render('badpage', {title: "Error 404", id: tokenId, info});
     }
 }
 

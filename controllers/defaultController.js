@@ -110,15 +110,19 @@ const item_page = async (req, res) => {
         };
     }
     const itemId = req.params.id;
-    const item = await listing.findOne({_id: itemId});
-    item.brand = item.brand==""?"N/A":item.brand;
+    try {
+        const item = await listing.findOne({_id: itemId});
+        item.brand = item.brand==""?"N/A":item.brand;
 
-    const seller = await User.findOne({_id: item.sellerId});
-    seller.brand = seller.brand==""?"N/A":seller.brand;
-    seller.address = seller.address==""?"N/A":seller.address;
-    seller.pic = seller.pic==""?"/img/user-icon.png":seller.pic;
+        const seller = await User.findOne({_id: item.sellerId});
+        seller.brand = seller.brand==""?"N/A":seller.brand;
+        seller.address = seller.address==""?"N/A":seller.address;
+        seller.pic = seller.pic==""?"/img/user-icon.png":seller.pic;
 
-    res.render('item', {title:"Item", id: tokenId, info, item, seller});
+        res.render('item', {title:"Item", id: tokenId, info, item, seller});
+    } catch (error) {
+        res.render('badpage', {title: "Error 404", id: tokenId, info});
+    }
 }
 
 const item_edit_page = async (req, res) => {
@@ -132,9 +136,18 @@ const item_edit_page = async (req, res) => {
     };
 
     const paramId = req.params.id;
-    const item = await listing.findOne({_id: paramId});
-
-    res.render('edit_item', {title: "Edit Item", id: tokenId, info, item});
+    try {
+        const item = await listing.findOne({_id: paramId});
+        const isSold = item.sold;
+        const sellerId = item.sellerId;
+        if(!isSold && tokenId===sellerId) {
+            res.render('edit_item', {title: "Edit Item", id: tokenId, info, item});
+        } else {
+            res.render('badpage', {title: "Error 404", id: tokenId, info});
+        }
+    } catch (error) {
+        res.render('badpage', {title: "Error 404", id: tokenId, info});
+    }
 }
 
 const item_edit = async (req, res) => {

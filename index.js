@@ -41,7 +41,7 @@ app.use( verify.homePageAuth, (req, res, next)=>{
         address: req.getUser.address || "N/A"
     };
     res.render('badpage', {title: "Error 404", id: tokenId, info});
-})
+});
 
 //check port connection
 const port = process.env.PORT || 8080;
