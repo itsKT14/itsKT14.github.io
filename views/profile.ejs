@@ -1,17 +1,18 @@
 <%- include('./partials/head.ejs') %>
 <%- include('./partials/nav.ejs') %>
-<div class="container-lg d-flex mt-4">
-    <div class="col-3 flex-row">
-        <img src="<%=info.pic%>" class="rounded-circle" alt="pic" style="width: 180px;">
-        <h2 class="mt-2"><%=info.name%></h2>
-        <p><%=info.email%></p>
-        <p>5.0 ⭐⭐⭐⭐⭐ (3)</p>
-        <p><%=info.address%> • Joined 3y 2m</p>
-        <p>Verified 😉 😊 😁</p>
-        <p>7 Followers • 1 Following</p>
+<div class="container-lg d-flex flex-column flex-md-row mt-5">
+    <div class="col-12 col-md-auto d-flex justify-content-center pfp">
+        <div class="d-flex flex-column">
+            <img src="<%=info.pic%>" class="rounded-circle" alt="pic" style="width: 180px;">
+            <h2 class="mt-2"><%=info.name%></h2>
+            <p><%=info.email%></p>
+            <p>5.0 ⭐⭐⭐⭐⭐ (3)</p>
+            <p><%=info.address%> • Joined 3y 2m</p>
+            <p>Verified 😉 😊 😁</p>
+            <p>7 Followers • 1 Following</p>
+        </div>
     </div>
-    <div class="col">
-        <div class="col" style="height: 100px;"></div>
+    <div class="col mt-5">
         <div class="d-flex gap-3">
             <ul class="nav nav-tabs col" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -25,27 +26,29 @@
         </div>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active pt-3 pb-4" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                <div class="border rounded rounded-3 shadow col p-4" style="min-height: 400px;">
-                    <div class="d-flex justify-content-between">
+                <div class="border rounded rounded-3 shadow col py-4 px-2 listings" style="min-height: 400px;">
+                    <div class="d-flex justify-content-between align-items-center mb-3 pxx3">
                         <h3>Listings</h3>
-                        <div class="form-group has-search w-25">
+                        <div class="form-group has-search col-5">
                             <span class="fa fa-search form-control-feedback"></span>
-                            <input type="text" class="form-control" placeholder="Search Listings...">
+                            <input type="text" class="form-control" placeholder="Search...">
                         </div>
                     </div>
-                    <div class="d-flex flex-wrap gap-2 mt-2 ps-1">
+                    <div class="d-flex flex-wrap m-0 mb-2 py-0 pe-0 pl3">
                     <% if (newListings.length > 0){ %>
                         <%for(let product of newListings){%>
-                        <div class="card mb-2" style="width: 11rem;">
-                            <img src="<%=product.pic%>" class="card-img-top" alt="pic" style="width: 174px; height: 174px;">
-                            <%if(product.sold==true){%>
-                            <p class="bg-primary text-white mb-0 px-1" style="position: absolute; top: 24px; z-index: 1;">Sold</p>
-                            <%}%>
-                            <div class="card-body">
-                                <h5 class="card-title pb-1" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%=product.title%></h5>
-                                <p class="card-text mb-0">PHP <%=product.price%></p>
-                                <p class="card-text" style="text-overflow: ellipsis;"><%=product.condition%></p>
-                                <a href="/item/<%=product._id%>" class="btn btn-primary w-100">View</a>
+                        <div class="mb-3 col-6 col-sm-4 col-md-4 col-lg-4 col-xl-3 pr3">
+                            <div class="card">
+                                <img src="<%=product.pic%>" class="card-img-top" alt="pic" style="width: 100%; aspect-ratio: 1 / 1;">
+                                <%if(product.sold==true){%>
+                                <p class="bg-primary text-white mb-0 px-1" style="position: absolute; top: 24px; z-index: 1;">Sold</p>
+                                <%}%>
+                                <div class="card-body">
+                                    <h5 class="card-title pb-1" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%=product.title%></h5>
+                                    <p class="card-text mb-0">PHP <%=product.price%></p>
+                                    <p class="card-text" style="text-overflow: ellipsis;"><%=product.condition%></p>
+                                    <a href="/item/<%=product._id%>" class="btn btn-primary w-100">View</a>
+                                </div>
                             </div>
                         </div>
                         <p><%=newListings.pic%></p>

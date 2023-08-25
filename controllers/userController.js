@@ -3,10 +3,7 @@ const listing = require('../models/listingModel');
 const validation = require('../utils/validation');
 const bcrypt = require('../utils/bcrypt');
 const jwt = require('jsonwebtoken');
-
-const fs = require('fs')
-const { google } = require('googleapis');
-const { parse } = require('path');
+const { streamUploadToPosts } = require("../utils/cloudinaryHandler");
 
 const user_add = async (req, res) => {
 	try {
@@ -55,9 +52,9 @@ const user_login = async (req, res) => {
             email: logUser.email,
             name: logUser.name,
             pic: getPic
-            }, process.env.TOKEN_SECRET, {expiresIn: "2h"});
+            }, process.env.TOKEN_SECRET);
 
-        res.cookie('token', token, { maxAge: 900000, httpOnly: true });
+        res.cookie('token', token, { httpOnly: true });
 
         res.redirect('/home');
 	} catch (error) {
@@ -93,8 +90,33 @@ const user_profile = async (req, res) => {
 
 const user_sell = async (req, res) => {
     try {
+        const upload_type = req.body.upload;
+        let image_public_id = "";
+        let image_url = "";
+        if(upload_type == "opt2"){
+            if(req.file){
+                await streamUploadToPosts(req)
+                .then((response) => {
+                    image_public_id = response.public_id;
+                    image_url = response.secure_url;
+
+                    console.log(`\nSuccess in uploading the image.`);
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.log(`\nError in uploading the image.`);
+
+                    res.status(error.http_code ?? 400).send(error);
+
+                    // Re-throw the error to prevent the execution
+                    // of the SQL query.
+                    throw error;
+                });
+            }
+        }
+
         const newListing = new listing({
-            pic: req.body.pic,
+            pic: upload_type === "opt1" ? req.body.image_file : image_url,
             category: req.body.category,
             tag: req.body.tag,
             title: req.body.title,
@@ -110,7 +132,9 @@ const user_sell = async (req, res) => {
             sold: false
         });
         await newListing.save();
-        res.redirect(`/user/profile/${req.getUser.id}`);
+
+        console.log("testing1");
+        return res.redirect(`/user/profile/${req.getUser.id}`);
     } catch (error) {
         console.log(error);
     }
@@ -128,47 +152,10 @@ const user_sell_view = async (req, res) => {
     res.render('sell', {title: "Sell", id: tokenId, info});
 }
 
-const user_sell_upload = async (req, res) => {
-    const GOOGLE_API_FOLDER_ID = '1-piOPBbYYcSGwEgBRNl1PJbtmCkMkoeK';
-    try {
-        const auth = new google.auth.GoogleAuth({
-            keyFile: './googlekey.json',
-            scopes: ['https://www.googleapis.com/auth/drive']
-        })
-    
-        const driveService = google.drive({
-            version: 'v3',
-            auth
-        })
-    
-        const fileMetaData = {
-            'name': 'snowplace.jpg',
-            'parents': [GOOGLE_API_FOLDER_ID]
-        }
-    
-        const media = {
-            mimeType: 'image/jpg',
-            body: fs.createReadStream('./chellocat.jpg')
-        }
-        
-        const response = await driveService.files.create({
-            resource: fileMetaData,
-            media: media,
-            field: 'id'
-        })
-        console.log(response.data.id);
-    } catch (error) {
-        console.log('Upload file error', error)
-    }
-    res.redirect('/user/sell');
-    //https://drive.google.com/uc?export=view&id=
-}
-
 module.exports = {
     user_add,
     user_login,
     user_profile,
     user_sell,
-    user_sell_view,
-    user_sell_upload
+    user_sell_view
 }

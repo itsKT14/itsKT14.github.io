@@ -43,6 +43,25 @@ function loadImg(link) {
 	document.getElementById("preview").src = link;
 }
 
+function loadFile(event) {
+	const file = event.target.files[0];
+	if ( document.getElementById("preview").classList.contains('d-none') ) {
+
+	} else {
+		document.getElementById("preview").classList.add('d-none');
+	}
+	if(file) {
+		document.getElementById("spinner").classList.remove('d-none');
+	} else {
+		if ( document.getElementById("spinner").classList.contains('d-none') ) {
+
+		} else {
+			document.getElementById("spinner").classList.add('d-none');
+		}
+	}
+	document.getElementById("preview").src = URL.createObjectURL(file);
+}
+
 function isLoading() {
 	if ( document.getElementById("spinner").classList.contains('d-none') ) {
 
@@ -56,10 +75,34 @@ function uploadOption(option) {
 	if(option=="opt1") {
 		document.getElementById("formText").disabled = false;
 		document.getElementById("formFile").disabled = true;
+
+		document.getElementById("formFile").value = [];
+		document.getElementById("preview").src = "";
+
+		if ( document.getElementById("preview").classList.contains('d-none') ) {
+
+		} else {
+			document.getElementById("preview").classList.add('d-none');
+		}
 	}
 	if(option=="opt2") {
 		document.getElementById("formText").disabled = true;
 		document.getElementById("formFile").disabled = false;
+
+		document.getElementById("formText").value = "";
+		document.getElementById("preview").src = "";
+
+		if ( document.getElementById("preview").classList.contains('d-none') ) {
+
+		} else {
+			document.getElementById("preview").classList.add('d-none');
+		}
+
+		if ( document.getElementById("spinner").classList.contains('d-none') ) {
+
+		} else {
+			document.getElementById("spinner").classList.add('d-none');
+		}
 	}
 }
 

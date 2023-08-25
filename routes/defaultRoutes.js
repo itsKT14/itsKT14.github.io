@@ -1,29 +1,30 @@
 const defaultController = require('../controllers/defaultController');
-const defaultRoutes = require('express').Router();
-const verify = require('../utils/auth');
+const router = require('express').Router();
+const { homePageAuth, otherPageAuth } = require('../utils/auth');
+const { streamUploadToPosts, streamUploadToProfile } = require("../utils/cloudinaryHandler");
 
 //home page
-defaultRoutes.get('/home', verify.homePageAuth, defaultController.home_page);
+router.get('/home', homePageAuth, defaultController.home_page);
 
 //settings page
-defaultRoutes.get('/settings/:id', verify.otherPageAuth, defaultController.settings_page);
+router.get('/settings/:id', otherPageAuth, defaultController.settings_page);
 
 //settings edit
-defaultRoutes.post('/settings/:id', verify.otherPageAuth, defaultController.settings_edit);
+router.post('/settings/profile/:id', otherPageAuth, defaultController.settings_edit);
 
 //item page
-defaultRoutes.get('/item/:id', verify.homePageAuth, defaultController.item_page);
+router.get('/item/:id', homePageAuth, defaultController.item_page);
 
 //item edit page
-defaultRoutes.get('/item/edit/:id', verify.otherPageAuth, defaultController.item_edit_page);
+router.get('/item/edit/:id', otherPageAuth, defaultController.item_edit_page);
 
 //item edit
-defaultRoutes.post('/item/edit/:id', verify.otherPageAuth, defaultController.item_edit);
+router.post('/item/edit/:id', otherPageAuth, defaultController.item_edit);
 
 //item sold
-defaultRoutes.get('/item/sold/:id', verify.otherPageAuth, defaultController.item_sold);
+router.get('/item/sold/:id', otherPageAuth, defaultController.item_sold);
 
 //item delete
-defaultRoutes.get('/item/delete/:id', verify.otherPageAuth, defaultController.item_delete);
+router.get('/item/delete/:id', otherPageAuth, defaultController.item_delete);
 
-module.exports = defaultRoutes;
+module.exports = router;

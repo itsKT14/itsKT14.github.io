@@ -1,30 +1,30 @@
 <%- include('./partials/head.ejs') %>
 <%- include('./partials/nav.ejs') %>
-<form action="/user/sell" method="POST">
+<form id="formData" onsubmit="event.preventDefault(); testFunc();">
 <div class="container-fluid shadow fixed-top notzindex" style="margin-top: 57px;">
     <div class="container-lg d-flex justify-content-between py-2 px-0 bg-white">
         <h4>What are you listing today?</h4>
         <button type="submit" class="btn btn-info">&nbsp;List Now&nbsp;</button>
     </div>
 </div>
-<div class="container-lg d-flex gap-4 align-items-start mb-5" style="margin-top: 72px;">
-    <div class="col-5 shadow rounded rounded-3 p-4">
-        <label for="imglink" class="form-label">Image link:</label>
+<div class="container-lg d-flex flex-column flex-md-row gap-4 align-items-start mb-5" style="margin-top: 72px;">
+    <div class="col-12 col-md-5 shadow rounded rounded-3 p-4">
+        <div class="form-label">Image link:</div>
         <div class="input-group mb-3">
             <div class="input-group-text" id="imglink">
                 <input class="form-check-input mt-0" type="radio" value="opt1" name="upload" onclick="uploadOption(this.value)" checked>
             </div>
             <span class="input-group-text" id="inputGroup-sizing-default">URL:</span>
-            <input type="text" class="form-control" id="formText" name="pic" aria-describedby="inputGroup-sizing-default" oninput="loadImg(this.value)">
+            <input type="text" class="form-control" id="formText" name="image_file" aria-describedby="inputGroup-sizing-default" oninput="loadImg(this.value)" required>
         </div>
-        <label for="imgupload" class="form-label">or Image upload: (Not Working)</label>
+        <div class="form-label">or Image upload:</div>
         <div class="input-group mb-4">
             <div class="input-group-text" id="imgupload">
                 <input class="form-check-input mt-0" type="radio" value="opt2" name="upload" onclick="uploadOption(this.value)">
             </div>
-            <input class="form-control" type="file" id="formFile" accept="image/jpeg, image/png, image/jpg" onchange="testFunc(this.files)" disabled>
+            <input class="form-control" type="file" id="formFile" name="image_file" accept="image/jpeg, image/png, image/jpg" onchange="loadFile(event)" disabled required>
         </div>
-        <label for="preview" class="form-label">Image Preview:</label>
+        <div class="form-label">Image Preview:</div>
         <div class="col border" style="height: 250px; width: 250px;">
             <img id="preview" src="" alt="" class="w-100 h-100 d-none" onload="isLoading()">
             <div class="d-flex h-100 justify-content-center align-items-center d-none" id="spinner">
@@ -35,8 +35,7 @@
         </div>
     </div>
     <div class="col shadow rounded rounded-3 p-4">
-        <!-- <a class="btn btn-primary" href="/user/upload">upload test</a> -->
-        <div class="btn-group w-100 mb-4 category-menu">
+        <div class="btn-group w-100 category-menu mb-0">
             <button id="chosenCategory" type="button" class="btn btn-white border-info col-11 py-2 border-end-0" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" style="text-align: left;">Select a category</button>
             <button type="button" class="btn btn-white border-info dropdown-toggle dropdown-toggle-split col-1 py-2 border-start-0" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                 <span class="visually-hidden">Toggle Dropdown</span>
@@ -44,7 +43,7 @@
             <ul id="category-dropdown" class="dropdown-menu scrollable-menu w-100 pt-0" role="menu">
                 <div class="input-group">
                     <span class="input-group-text bg-white border-0 border-bottom border-info rounded-0 ps-3 py-2" id="search"><i class="fa fa-search" style="color: #aaa;"></i></span>
-                    <input type="text" class="form-control shadow-none border-0 border-bottom border-info rounded-0 ps-0 py-2" placeholder="Search categories..." aria-label="Username" aria-describedby="basic-addon1" style="text-align: left;">
+                    <input type="text" id="search" class="form-control shadow-none border-0 border-bottom border-info rounded-0 ps-0 py-2" placeholder="Search categories..." aria-label="Username" aria-describedby="basic-addon1" style="text-align: left;">
                 </div>
                 <div class="accordion accordion-flush" id="accordionFlushExample">
                     <div class="accordion-item">
@@ -610,36 +609,36 @@
                         </div>
                     </div>
                 </div>
-                <input type="text" id="category" name="category" class="d-none" required>
-                <input type="text" id="tag" name="tag" class="d-none" required>
             </ul>
         </div>
+        <input type="text" id="category" name="category" class="hidden-input" required>
+        <input type="text" id="tag" name="tag" class="hidden-input" required>
         <div class="form-floating mb-4">
-            <input type="text" class="form-control" id="floatingInput" name="title" placeholder="Name your listing" required>
-            <label for="floatingInput">Listing Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Name your listing" required>
+            <label for="title">Listing Title</label>
         </div>
         <h4 class="ps-1 mb-3">Item Details</h4>
         <p class="ps-1">Condition</p>
-        <div class="mb-1">
+        <div class="mb-4 d-flex flex-wrap gap-3">
             <input type="radio" class="btn-check" name="condition" id="brandnew" autocomplete="off" value="Brand new" checked>
-            <label class="btn btn-outline-info rounded-pill text-dark me-3 mb-3" for="brandnew">Brand new</label>
+            <label class="btn btn-outline-info rounded-pill text-dark" for="brandnew">Brand new</label>
 
             <input type="radio" class="btn-check" name="condition" id="likenew" autocomplete="off" value="Like new">
-            <label class="btn btn-outline-info rounded-pill text-dark me-3 mb-3" for="likenew">&nbsp;Like new&nbsp;</label>
+            <label class="btn btn-outline-info rounded-pill text-dark" for="likenew">&nbsp;Like new&nbsp;</label>
 
             <input type="radio" class="btn-check" name="condition" id="lightuse" autocomplete="off" value="Lightly used">
-            <label class="btn btn-outline-info rounded-pill text-dark me-3 mb-3" for="lightuse">Lightly used</label>
+            <label class="btn btn-outline-info rounded-pill text-dark" for="lightuse">Lightly used</label>
             
             <input type="radio" class="btn-check" name="condition" id="welluse" autocomplete="off" value="Well used">
-            <label class="btn btn-outline-info rounded-pill text-dark me-3 mb-3" for="welluse">&nbsp;Well used&nbsp;</label>
+            <label class="btn btn-outline-info rounded-pill text-dark" for="welluse">&nbsp;Well used&nbsp;</label>
 
             <input type="radio" class="btn-check" name="condition" id="heavyuse" autocomplete="off" value="Heavily used">
-            <label class="btn btn-outline-info rounded-pill text-dark me-3 mb-3" for="heavyuse">Heavily used</label>
+            <label class="btn btn-outline-info rounded-pill text-dark" for="heavyuse">Heavily used</label>
         </div>
         <p class="ps-1">Price</p>
         <div class="input-group mb-4">
             <span class="input-group-text">PHP</span>
-            <input type="number" name="price" class="form-control" required>
+            <input type="number" id="price" name="price" class="form-control" required>
         </div>
         <p class="ps-1">Description</p>
         <textarea class="form-control  mb-4" id="description" name="description" rows="3" placeholder="Describe what you are selling and include any details a buyer might be interested in. People love items with stories!" required></textarea>
@@ -677,6 +676,7 @@
 </div>
 </form>
 <script src="/js/script.js"></script>
+<script src="/js/upload.js"></script>
 <%- include('./partials/categories.ejs') %>
 <%- include('./partials/footer.ejs') %>
 <%- include('./partials/foot.ejs') %>

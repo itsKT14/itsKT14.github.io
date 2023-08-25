@@ -1,36 +1,35 @@
-const userRoutes = require('express').Router();
 const userController = require('../controllers/userController');
-const verify = require('../utils/auth');
+const router = require('express').Router();
+const { otherPageAuth } = require('../utils/auth');
+const multer = require("multer");
+const multerUpload = multer();
 
-userRoutes.get('/login', (req, res)=>{
+router.get('/login', (req, res)=>{
     res.render('login',{message: false, title:"Login"});
 });
 
-userRoutes.get('/register', (req, res)=>{
+router.get('/register', (req, res)=>{
     res.render('register',{message: false, title:"Register"});
 });
 
-userRoutes.get('/logout', (req, res)=>{
+router.get('/logout', (req, res)=>{
     res.clearCookie('token');
     res.redirect('login');
 });
 
 //profile view
-userRoutes.get('/profile/:id', verify.otherPageAuth, userController.user_profile);
+router.get('/profile/:id', otherPageAuth, userController.user_profile);
 
 //sell view
-userRoutes.get('/sell', verify.otherPageAuth, userController.user_sell_view);
+router.get('/sell', otherPageAuth, userController.user_sell_view);
 
 //sell
-userRoutes.post('/sell', verify.otherPageAuth, userController.user_sell);
-
-//user image upload
-userRoutes.get('/upload', userController.user_sell_upload);
+router.post('/sell', otherPageAuth, multerUpload.single("image_file"), userController.user_sell);
 
 //add user
-userRoutes.post('/register', userController.user_add);
+router.post('/register', userController.user_add);
 
 //login user
-userRoutes.post('/login', userController.user_login);
+router.post('/login', userController.user_login);
 
-module.exports = userRoutes;
+module.exports = router;

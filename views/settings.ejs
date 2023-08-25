@@ -1,22 +1,22 @@
 <%- include('./partials/head.ejs') %>
 <%- include('./partials/nav.ejs') %>
-<div class="container-lg mt-5 d-flex gap-3 mb-5">
-    <div class="col-3">
-        <div class="nav flex-column nav-pills me-3 gap-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Edit profile</button>
-            <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Change password</button>
-            <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Notifications</button>
-            <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Data and privacy</button>
+<div class="container-lg mt-5 d-flex flex-column flex-md-row gap-3 mb-5">
+    <div class="col-auto">
+        <div class="nav d-flex flex-row flex-md-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <button class="nav-link col-6 col-md-12 active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Edit profile</button>
+            <button class="nav-link col-6 col-md-12" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Change password</button>
+            <button class="nav-link col-6 col-md-12" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Notifications</button>
+            <button class="nav-link col-6 col-md-12" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Data and privacy</button>
         </div>
     </div>
-    <div class="col-9">
-        <form action="/settings/<%=id%>" method="post">
-            <div class="tab-content" id="v-pills-tabContent">
-                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
-                    <div class="shadow rounded rounded-3 p-4">
+    <div class="col">
+        <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
+                <div class="shadow rounded rounded-3 p-4">
+                    <form class="pfpform" action="/settings/profile/<%=id%>" method="post">
                         <h1 class="pb-3">Edit Profile</h1>
                         <h4>Profile Photo</h4>
-                        <div class="d-flex gap-4">
+                        <div class="d-flex flex-column flex-sm-row gap-4">
                             <div class="col-auto">
                                 <label for="preview" class="form-label">Image Preview:</label>
                                 <div class="col border" style="height: 225px; width: 225px;">
@@ -42,7 +42,8 @@
                                     <div class="input-group-text" id="imgupload">
                                         <input class="form-check-input mt-0" type="radio" value="opt2" name="upload" onclick="uploadOption(this.value)">
                                     </div>
-                                    <input class="form-control" type="file" id="formFile" accept="image/jpeg, image/png, image/jpg" onchange="testFunc(this.files)" disabled>
+                                    <input class="form-control" type="file" id="formFile" name="image" accept="image/jpeg, image/png, image/jpg">
+                                    <!-- <input type="text" id="filePic" name="filePic" hidden> -->
                                 </div>
                                 <p class="fw-light"><i class="bi bi-info-circle me-2"></i>Clear frontal face photos are an important way for buyers and sellers to learn about each other and to avoid scammers.</p>
                             </div>
@@ -68,25 +69,47 @@
                         <div class="d-flex flex-row-reverse">
                             <button class="btn btn-info" type="submit">Save Changes</button>
                         </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
-                    <div class="shadow rounded rounded-3 p-4" style="height: 837px;">
-                        Coming soon...
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabindex="0">
-                    <div class="shadow rounded rounded-3 p-4" style="height: 837px;">
-                        Coming soon...
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabindex="0">
-                    <div class="shadow rounded rounded-3 p-4" style="height: 837px;">
-                        Coming soon...
-                    </div>
+                    </form>
+                    
                 </div>
             </div>
-        </form>
+            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
+                <div class="shadow rounded rounded-3 p-4" style="height: 837px;">
+                    <h3>Change Password</h3>
+                    <form action="">
+                        <p>You’ll be logged out of all sessions including this one to protect your account if anyone is trying to gain access. </p>
+                        <p>Your password must be at least 8 characters and should include a combination of numbers, letters and special characters (!$@%). </p>
+                        <div class="mb-3">
+                            <label htmlFor="oldpass" class="form-label">Old password</label>
+                            <input id='oldpass' type="password" class="form-control" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label htmlFor="newpass" class="form-label">New password</label>
+                            <input id='newpass' type="password" class="form-control" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label htmlFor="confirmpass" class="form-label">Confirm new password</label>
+                            <input id='confirmpass' type="password" class="form-control" required/>
+                        </div>
+                        <div class="row float-end">
+                            <div class="form-group">
+                                <button type='submit' class='btn btn-info'>&nbsp;Change password&nbsp;</button>
+                            </div>  
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabindex="0">
+                <div class="shadow rounded rounded-3 p-4" style="height: 837px;">
+                    Coming soon...
+                </div>
+            </div>
+            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabindex="0">
+                <div class="shadow rounded rounded-3 p-4" style="height: 837px;">
+                    Coming soon...
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script src="/js/script.js"></script>

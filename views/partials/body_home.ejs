@@ -18,58 +18,66 @@
         </div>
     </div>
 </div>
-<div id="banner" class="container-lg text-light d-flex flex-column align-items-center justify-content-center rounded rounded-4 mt-4">
-    <p class="fw-bold hero-title">BUY AND SELL PHILIPPINES</p>
-    <p class="hero-slogan">A better way to buy and sell locally</p>
-    <a href="#newlist" class="btn btn-primary btn-lg rounded-pill">Explore</a>
+<div class="container-lg p-0">
+    <div class="banner text-light d-flex flex-column align-items-center justify-content-center mt-4">
+        <p class="fw-bold hero-title">BUY AND SELL PHILIPPINES</p>
+        <p class="hero-slogan">A better way to buy and sell locally</p>
+        <a href="#newlist" class="btn btn-primary btn-lg rounded-pill">Explore</a>
+    </div>
 </div>
 <p id="featured-categories"></p>
 <div class="container-lg p-0 mt-5">
-    <h2 class="mb-3 pt-2">Featured Categories</h2>
-    <div class="container-fluid d-flex flex-wrap p-0 gap-3">
-        <div class="d-flex flex-column">
+    <h2 class="mb-3 pt-2 ps3">Featured Categories</h2>
+    <div class="container-fluid row m-0 p-0">
+        <div class="d-flex flex-column col-6 col-sm-4 col-md-3 col-lg-2">
             <img src="https://lzd-img-global.slatic.net/g/p/29227ea1f64a5ed17c6e15820e76d53e.jpg_720x720q80.jpg_.webp" alt="pic" class="category-card rounded rounded-4 border">
             <p class="fs-5 mt-1">Mobile Phones & Gadgets</p>
         </div>
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column col-6 col-sm-4 col-md-3 col-lg-2">
             <img src="https://lzd-img-global.slatic.net/g/p/28e1932ca7d3cb5e2fa7b98141435de5.png_720x720q80.png_.webp" alt="pic" class="category-card rounded rounded-4 border">
             <p class="fs-5 mt-1">Video Gaming</p>
         </div>
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column col-6 col-sm-4 col-md-3 col-lg-2">
             <img src="https://cf.shopee.ph/file/12367b6526baf05f15e206710f0ecd3b" alt="pic" class="category-card rounded rounded-4 border">
             <p class="fs-5 mt-1">Women's Fashion</p>
         </div>
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column col-6 col-sm-4 col-md-3 col-lg-2">
             <img src="https://cf.shopee.ph/file/3fa8793265d66325aef31d224e8ca1f8" alt="pic" class="category-card rounded rounded-4 border">
             <p class="fs-5 mt-1">Mens's Fashion</p>
         </div>
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column col-6 col-sm-4 col-md-3 col-lg-2">
             <img src="https://www.ikea.com/ph/en/images/products/lack-tv-unit-black-brown__0955265_pe803705_s5.jpg?f=s" alt="pic" class="category-card rounded rounded-4 border">
             <p class="fs-5 mt-1">TV & Home Appliances</p>
+        </div>
+        <div class="d-flex flex-column col-6 col-sm-4 col-md-3 col-lg-2">
+            <img src="https://bpc.h-cdn.co/assets/17/35/980x980/square-1504204494-studio3-beats-headphones.jpg" alt="pic" class="category-card rounded rounded-4 border">
+            <p class="fs-5 mt-1">Headphones & Headsets</p>
         </div>
         <p id="newlist"></p>
     </div>
     
 </div>
 <div class="container-lg p-0 my-5">
-    <h2 class="mb-3">New Listings</h2>
-    <div class="container-fluid d-flex flex-wrap p-0 gap-3">
+    <h2 class="mb-3 ps3">New Listings</h2>
+    <div class="container-fluid row m-0 py-0 pe-0 pl3">
         <% if (items.length > 0){ %>
             <%for(let product of items){%>
-            <div class="card mb-2" style="width: 251px;">
-                <img src="<%=product.pic%>" class="card-img-top" alt="pic" style="width: 249px; height: 249px;">
-                <div class="card-body">
-                    <h5 class="card-title pb-1" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%=product.title%></h5>
-                    <p class="card-text mb-0">PHP <%=product.price%></p>
-                    <p class="card-text mb-1"><%=product.condition%></p>
-                    <div class="input-group mb-1">
-                        <span class="input-group-text bg-white border-0 ps-0 pe-1" id="search">
-                            <img class="rounded-circle border border-dark me-1" src="<%=product.sellerPic%>" alt="" style="width: 25px; height: 25px;">
-                        </span>
-                        <span class="input-group-text bg-white border-0 ps-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%=product.sellerName%></span>
+            <div class="mb-3 col-6 col-md-4 col-lg-3 pr3">
+                <div class="card">
+                    <img src="<%=product.pic%>" class="card-img-top" alt="pic" style="width: 100%; aspect-ratio: 1 / 1;">
+                    <div class="card-body">
+                        <h5 class="card-title pb-1" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%=product.title%></h5>
+                        <p class="card-text mb-0">PHP <%=product.price%></p>
+                        <p class="card-text mb-1"><%=product.condition%></p>
+                        <div class="d-flex align-items-center mb-1">
+                            <div class="border-0 ps-0 pe-1" id="search">
+                                <img class="rounded-circle border border-dark me-1" src="<%=product.sellerPic%>" alt="" style="width: 25px; height: 25px;">
+                            </div>
+                            <div class="border-0 ps-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%=product.sellerName%></div>
+                        </div>
+                        <p class="card-text mb-3 just text-end fw-light"><i class="bi bi-clock-history pe-2"></i><%=product.date%></p>
+                        <a href="/item/<%=product.id%>" class="btn btn-primary w-100">View</a>
                     </div>
-                    <p class="card-text mb-3 just text-end fw-light"><i class="bi bi-clock-history pe-2"></i><%=product.date%></p>
-                    <a href="/item/<%=product.id%>" class="btn btn-primary w-100">View</a>
                 </div>
             </div>
             <%}%>

@@ -7,8 +7,8 @@
         <button type="submit" class="btn btn-info">&nbsp;Update&nbsp;</button>
     </div>
 </div>
-<div class="container-lg d-flex gap-4 align-items-start mb-5" style="margin-top: 72px;">
-    <div class="col-5 shadow rounded rounded-3 p-4">
+<div class="container-lg d-flex flex-column flex-md-row gap-4 align-items-start mb-5" style="margin-top: 72px;">
+    <div class="col-12 col-md-5 shadow rounded rounded-3 p-4">
         <label for="imglink" class="form-label">Image link:</label>
         <div class="input-group mb-3">
             <div class="input-group-text" id="imglink">
@@ -36,7 +36,7 @@
     </div>
     <div class="col shadow rounded rounded-3 p-4">
         <!-- <a class="btn btn-primary" href="/user/upload">upload test</a> -->
-        <div class="btn-group w-100 mb-4 category-menu">
+        <div class="btn-group w-100 category-menu">
             <button id="chosenCategory" type="button" class="btn btn-white border-info col-11 py-2 border-end-0" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" style="text-align: left;"><%=item.category%> > <%=item.tag%></button>
             <button type="button" class="btn btn-white border-info dropdown-toggle dropdown-toggle-split col-1 py-2 border-start-0" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                 <span class="visually-hidden">Toggle Dropdown</span>
@@ -610,31 +610,31 @@
                         </div>
                     </div>
                 </div>
-                <input type="text" id="category" name="category" class="d-none">
-                <input type="text" id="tag" name="tag" class="d-none">
             </ul>
         </div>
+        <input type="text" id="category" name="category" class="hidden-input" value="<%=item.category%>" required>
+        <input type="text" id="tag" name="tag" class="hidden-input" value="<%=item.tag%>" required>
         <div class="form-floating mb-4">
             <input type="text" class="form-control" id="floatingInput" name="title" placeholder="Name your listing" value="<%=item.title%>" required>
             <label for="floatingInput">Listing Title</label>
         </div>
         <h4 class="ps-1 mb-3">Item Details</h4>
         <p class="ps-1">Condition</p>
-        <div class="mb-4">
+        <div class="mb-4 d-flex flex-wrap gap-3">
             <input type="radio" class="btn-check" name="condition" id="brandnew" autocomplete="off" value="Brand new" <%=item.condition=="Brand new"?"checked":""%>>
-            <label class="btn btn-outline-info rounded-pill text-dark me-3" for="brandnew">Brand new</label>
+            <label class="btn btn-outline-info rounded-pill text-dark" for="brandnew">Brand new</label>
 
             <input type="radio" class="btn-check" name="condition" id="likenew" autocomplete="off" value="Like new" <%=item.condition=="Like new"?"checked":""%>>
-            <label class="btn btn-outline-info rounded-pill text-dark me-3" for="likenew">&nbsp;Like new&nbsp;</label>
+            <label class="btn btn-outline-info rounded-pill text-dark" for="likenew">&nbsp;Like new&nbsp;</label>
 
             <input type="radio" class="btn-check" name="condition" id="lightuse" autocomplete="off" value="Lightly used" <%=item.condition=="Lightly used"?"checked":""%>>
-            <label class="btn btn-outline-info rounded-pill text-dark me-3" for="lightuse">Lightly used</label>
+            <label class="btn btn-outline-info rounded-pill text-dark" for="lightuse">Lightly used</label>
             
             <input type="radio" class="btn-check" name="condition" id="welluse" autocomplete="off" value="Well used" <%=item.condition=="Well used"?"checked":""%>>
-            <label class="btn btn-outline-info rounded-pill text-dark me-3" for="welluse">&nbsp;Well used&nbsp;</label>
+            <label class="btn btn-outline-info rounded-pill text-dark" for="welluse">&nbsp;Well used&nbsp;</label>
 
             <input type="radio" class="btn-check" name="condition" id="heavyuse" autocomplete="off" value="Heavily used" <%=item.condition=="Heavily used"?"checked":""%>>
-            <label class="btn btn-outline-info rounded-pill text-dark me-3" for="heavyuse">Heavily used</label>
+            <label class="btn btn-outline-info rounded-pill text-dark" for="heavyuse">Heavily used</label>
         </div>
         <p class="ps-1">Price</p>
         <div class="input-group mb-4">
